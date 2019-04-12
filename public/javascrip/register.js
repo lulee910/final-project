@@ -1,6 +1,20 @@
 var flag2 = false;
 var flag3 = false;
 var flag4 = false;
+
+$('.navbar').css('position', 'absolute');
+    $('li[name="reg_tag "]').on('click', function() {
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            $('li[name="login_tag "]').removeClass('active');
+        }
+    })
+    $('li[name="login_tag "]').on('click', function() {
+        if (!$(this).hasClass('active')) {
+            $(this).addClass('active');
+            $('li[name="reg_tag "]').removeClass('active');
+        }
+    })
 $(document).ready(function() {
 
 $("#passswd1").on('click', function() {

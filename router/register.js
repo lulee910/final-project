@@ -19,7 +19,7 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 //app.use(express.static('note-taking'));
 
 router.get("/", async (req, res) =>{
-    res.render("sys/main", {flag :true});
+    res.render("sys/main", {flag :true, partial: "register-script"});
 });
 
 router.post("/login_post",async (req, res) =>{

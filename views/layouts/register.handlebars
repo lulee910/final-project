@@ -1,8 +1,6 @@
-
 <!DOCTYPE html>
 {{#if flag}}
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Sign Up/Sign In</title>
@@ -35,30 +33,14 @@
     <link rel="stylesheet" href="/public/css/Normalize.css">
     <script src="/public/javascrip/jquery.min.js"></script>
     <script src="/public/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="/public/javascrip/register.js"></script>
 </head>
 
 <body>
     <main>
         {{{body}}}
     </main>
+    {{> (lookup . 'partial') }}
 </body>
-<script>
-    $('.navbar').css('position', 'absolute');
-    $('li[name="reg_tag "]').on('click', function() {
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active');
-            $('li[name="login_tag "]').removeClass('active');
-        }
-    })
-    $('li[name="login_tag "]').on('click', function() {
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active');
-            $('li[name="reg_tag "]').removeClass('active');
-        }
-    })
-</script>
-
 </html>
 {{else}}
 {{{body}}}

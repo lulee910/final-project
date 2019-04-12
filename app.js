@@ -9,7 +9,7 @@ app.use("/public", static);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-app.engine("handlebars", exphbs({ defaultLayout: "register" }));
+app.engine("handlebars", exphbs({ defaultLayout: "register",partialsDir: ["views/partials/"] }));
 app.set("view engine", "handlebars");
 
 configRoutes(app);
