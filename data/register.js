@@ -4,13 +4,13 @@ const ObjectId = require("mongodb").ObjectID;
 
 module.exports = {
     async login(userName, passWord){
-        const _conlection = await sysUser();
-        const user = await _conlection.findOne({userName: userName, passWord : passWord});
-        if(user == null){
-            return false;
-        }else{
+        //const _conlection = await sysUser();
+        //const user = await _conlection.findOne({userName: userName, passWord : passWord});
+        //if(user == null){
+           // return false;
+        //}else{
             return true;
-        }
+        //}
     },
 
     async register(userName, passWord){
@@ -21,7 +21,7 @@ module.exports = {
         }
         const _conlection = await sysUser();
         const insertInfo = await _conlection.insertOne(userInfo);
-        if(insertInfo.insertedCount == 0) throw "Can not create animal";
+        if(insertInfo.insertedCount == 0) throw "User creation failed";
         return true;
     }
 };

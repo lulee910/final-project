@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 $("#passswd1").on('click', function() {
     console.log($(this).val());
-    var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;6-16位常用数字，字母及常用符号，区分大小写</h6> <br > ';
+    var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;6-16 commonly used numbers, letters and common symbols, case sensitive</h6> <br > ';
     if ($(this).val() == "") {
         $("#passswd1Tip").html("");
         $("#passswd1Tip").append(text);
@@ -35,7 +35,7 @@ $("#passswd1").on('blur', function() {
         console.log(patt.test(keywd));
         if (!patt.test(keywd)) {
             $("#passswd1Tip").html("");
-            var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;输入密码格式错误，6-16位常用数字，字母及常用符号，区分大小写</h6> <br > ';
+            var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;Input password format error, 6-16 commonly used numbers, letters and common symbols, case sensitive</h6> <br > ';
             $("#passswd1Tip").append(text);
             $("#passswd1Tip").css('display', 'block');
             flag3 = false;
@@ -58,7 +58,7 @@ $("#passswd2").on('blur', function() {
     if (keywd != '') {
         if (keywd1 != keywd) {
             $("#passswd2Tip").html("");
-            var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;两次输入的密码不相同，请重新输入</h6> <br > ';
+            var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;The passwords you entered do not match</h6> <br > ';
             $("#passswd2Tip").append(text);
             $("#passswd2Tip").css('display', 'block');
             flag4 = false;
@@ -71,7 +71,7 @@ $("#passswd2").on('blur', function() {
         }
     } else {
         $("#passswd2Tip").html("");
-        var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;请再次输入密码</h6> <br > ';
+        var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;Enter your password again</h6> <br > ';
         $("#passswd2Tip").append(text);
         $("#passswd2Tip").css('display', 'block');
         flag4 = false;
@@ -82,7 +82,7 @@ $("#passswd2").on('blur', function() {
 
 $("#usernameR").on("click", function() {
     console.log("www");
-    var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;请输入您的用户名</h6> <br> ';
+    var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;Please enter your username</h6> <br> ';
     if ($(this).val() == "") {
         $("#usernameTip").html("");
         $("#usernameTip").append(text);
@@ -152,6 +152,7 @@ function deleteCookie(name) {
 }
 
 $("#loginBtn").on('click', function() {
+    $('#error').addClass("hidden");
     var sessionStorage = new window.sessionStorage();
     sessionStorage.setItem("username", $("#username").val());
     sessionStorage.setItem("passwd", $("#passwd").val());
