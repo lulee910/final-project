@@ -5,18 +5,15 @@
     <meta charset="UTF-8">
     <title>Sign Up/Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/Normalize.css">
+    {{> head_script}}
     <link rel="stylesheet" href="/public/css/register.css">
-    <script src="/public/javascrip/jquery.min.js"></script>
-    <script src="/public/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/public/javascrip/register.js"></script>
 </head>
 
 <body>
     <main>
         {{{body}}}
     </main>
-    {{> (lookup . 'partial') }}
 </body>
 </html>
 {{else}}

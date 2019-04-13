@@ -2,29 +2,8 @@
 <head>
     <title>{{title}}</title>
     <meta name="decorator" content="blank" />
-    <link rel="stylesheet" href="/public/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <script src="/public/javascrip/jquery.min.js"></script>
-    <script src="/public/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="/public/javascrip/register.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#menu a").click(function () {
-                $("#menu li").removeClass("active");
-                $(this).parent().addClass("active");
-                $("#mainFrame").show();
-            });
-            $("#topMenu a").click(function () {
-                $("#topMenu li").removeClass("active");
-                $(this).parent().addClass("active");
-                $('#panel').removeClass("hidden");
-                $('#panelHead').text((this).text);
-                $("#menu li").removeClass("active");
-                $('#menu ul').addClass("hidden");
-                var menu = '#menu' + $(this).attr("data-id");
-                $(menu).removeClass("hidden");
-            });
-        })
-    </script>
+    {{> head_script}}
+    <script src="/public/javascrip/sysindex.js"></script>
 </head>
 
 <body>
