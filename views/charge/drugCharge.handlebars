@@ -1,0 +1,277 @@
+<html>
+
+<head>
+    <title>Drug Charge</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="Cache-Control" content="no-store">
+    {{> head_script}}
+    <script src="/public/js/c_js_drugCharge.js"></script>
+    <script src="/public/autocomplete/jquery.autocomplete.js"></script>
+    <link rel="stylesheet" href="/public/autocomplete/jquery.autocomplete.css">
+
+    <meta name="decorator" content="default" />
+</head>
+
+<body>
+    <form id="inputForm" modelAttribute="hjInfo" action="/drugCharge" method="post" class="form-horizontal">
+        <sys:message content="${message}" />
+        <form:hidden path="chargesId" id="chargesId" /> 
+        <form:hidden path="id" />
+        <form:hidden path="oldChargesId" />
+        <form:hidden path="temp2" />
+        <form:hidden path="feeType" />
+        <form:hidden path="feeName" value="${fns:getUser().name}" />
+        <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
+        <input id="Flag" type="hidden" />
+        <div class="panel panel-default " id="panel">
+            <div class="panel-heading">
+                <strong><span>Basic Information</span></strong>
+            </div>
+            <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
+                <tbody>
+                    <tr>
+                        <td class="key"><label for="firstDoc">Doctor</label></td>
+                        <td><div>
+                                <select class="form-control" id="firstDoc" name="hjInfoList[firstDoc]">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                            
+                        </td>
+                        <td class="key"><label for="name">Patient</label> <span style="color:red">*</span></td>
+                        <td>
+                            <div><input type="text" class="form-control " id="name" name="hjInfoList[name]"></div>
+                            </td>
+                        <td class="key"><label for="sex">Gender</label></td>
+                        <td> <select class="form-control" id="sex" name="hjInfoList[sex]">
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select></td>
+                    </tr>
+                    <tr>
+                        {{!#if hjInfo.feeType 1}}
+                        <td class="key"><label for="tel">Contact Number</label> <span style="color:red">*</span></td>
+                        <td><div><input type="text" class="form-control" id="tel" name="tel"></td></div>
+                        {{!/if}}
+                        <td class="key"><label for="feeDate">Charge Date</label> <span style="color:red">*</span></td>
+                        <td>
+                            <div class='input-group date' >
+                                <input type='text' class="form-control" id='feeDate' name="hjInfoList[feeDate]"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </td>
+                        <td class="key"><label>Total</label></td>
+                        <td>$<span class="number total" id="numFee2">0.00</span></td>
+                        {{!--#if hjInfo.feeType 3}}
+								<td class="key"><label>收费总额：</label> <form:hidden
+										path="name" value="零售" /></td>
+								<c:if test="${empty hjInfo.numFee}">
+									<td><span class="number total" id="numFee2">0.00</span>元</td>
+								</c:if>
+								<c:if test="${not empty hjInfo.numFee}">
+									<c:if test="${not empty hjInfo.oldChargesId }">
+										<td><span class="number total" id="numFee2">${hjInfo.owemoney - hjInfo.patchFee}</span>元</td>
+									</c:if>
+									<c:if test="${empty hjInfo.oldChargesId }">
+										<td><span class="number total" id="numFee2">${hjInfo.numFee}</span>元</td>
+									</c:if>
+								</c:if>
+							{{/if--}}
+                    </tr>
+                    <tr>
+                        {{!#if hjInfo.feeType 1 2}}
+
+                        {{!--<c:if test="${not empty hjInfo.numFee}">}}
+									<c:if test="${not empty hjInfo.oldChargesId }">
+										<td><span class="number total" id="numFee2">${hjInfo.owemoney - hjInfo.patchFee}</span>元</td>
+									</c:if>
+									<c:if test="${empty hjInfo.oldChargesId }">
+										<td><span class="number total" id="numFee2">${hjInfo.numFee}</span>元</td>
+									</c:if>
+								{{</c:if>--}}
+
+                        {{!/if}}
+                        <td class="key"><label for="drugName">Drug Name</label></td>
+                        <td><input type="text" class="form-control" id="drugName">
+                            <input id="enter" type="hidden" value="0" /></td>
+                        <td class="key"><label for="drugName2">Bar Code</label></td>
+                        <td><input type="text" class="form-control" id="drugName2">
+                            <input id="enter" type="hidden" value="0" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <br />
+
+        <div class="panel panel-default ">
+            <div class="panel-heading">
+                <strong><span>Charge Information</span></strong>
+            </div>
+            <div class="panel-body">
+                <table id="contentTable" class="table table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="hide"></th>
+                            <th>Drug Name</th>
+                            <th>Drug Type</th>
+                            <th>Drug Specifications</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Group ID</th>
+                            <shiro:hasPermission>
+                                <th width="10">&nbsp;</th>
+                            </shiro:hasPermission>
+                        </tr>
+                    </thead>
+                    <tbody id="hjFeeInfoList">
+                    </tbody>
+                </table>
+
+                <div class="complexContent"></div>
+                <div style="height: 20px; margin-top: 20px;">
+                    <div style="float: right; margin-top: -10px; margin-right: 20px;">
+                        <input type="button" id="btnSubmit" value="Submit"
+							class="btn btn-primary"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script id="hjFeeInfoTpl" type="text/x-handlebars-template">
+						<tr id="hjFeeInfoList{{row.idx}}">
+                            <td class="hide">
+                                {{row.idx}}
+                            </td>
+							<td class="hide">
+								<input id="hjFeeInfoList{{row.idx}}_chargesId" name="hjFeeInfoList[{{row.idx}}][chargesId]" type="hidden" value="{{row.chargesId}}"/>
+								<input id="hjFeeInfoList{{row.idx}}_drugsId" name="hjFeeInfoList[{{row.idx}}][drugsId]" type="hidden" value="{{row.drugsId}}"/>
+								<input id="hjFeeInfoList{{row.idx}}_delFlag" name="hjFeeInfoList[{{row.idx}}][delFlag]" type="hidden" value="0"/>
+							</td>
+							<td>
+                                {{row.drugsName}}
+							</td>
+							<td>
+								{{row.drugsType}}
+							</td>
+							<td>
+								{{row.drugsSpec}}
+							</td>
+							<td>					
+								<div><input id="hjFeeInfoList{{row.idx}}_allNum" name="hjFeeInfoList[{{row.idx}}][allNum]" class="form-control" type="number" value="1" onblur="javascript:claim({{row.idx}})"/></div>
+							</td>
+							<td>
+                                <label id="hjFeeInfoList{{row.idx}}_price">{{row.price}}</label>
+								<input id="hjFeeInfoList{{row.idx}}_price1"  name="hjFeeInfoList[{{idx}}][price1]" type="hidden" value="{{row.price}}"/>
+								
+							</td>
+							<td>
+								<label id="hjFeeInfoList{{row.idx}}_numPrice">{{row.numPrice}}</label>
+								<input id="hjFeeInfoList{{row.idx}}_numPrice1"  name="hjFeeInfoList[{{idx}}][numPrice]" type="hidden" value="{{row.numPrice}}"/>
+							</td>
+							<td>
+								<input id="hjFeeInfoList{{row.idx}}_groupId" name="hjFeeInfoList[{{row.idx}}][groupId]" 
+								type="text" value="{{row.groupId}}" maxlength="2" style="width:20px;" onblur="javascript:changeGroup({{row.idx}});" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+							</td>
+                            <shiro:hasPermission ><td class="text-center" width="10">
+								<span class="close" onclick="delRow(this, '{{row.chargesId}}','{{row.feeId}}','{{row.allNum}}','{{row.drugsId}}')" title="删除">&times;</span>
+							</td></shiro:hasPermission>
+						</tr>
+					</script>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Charge Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="control-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-3">
+                                        <label class="control-label">Total</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="text" class="form-control" id="numFee" name="hjInfoList[numFee]"
+                                              readonly="readonly"  aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-3">
+                                        <label class="control-label" for="methodType">Charge Type</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="methodType" name="hjInfoList[methodType]">
+                                            <option></option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-3">
+                                        <label class="control-label" for="inFee">实收金额:</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="text" class="form-control" id="inFee" name="hjInfoList[inFee]"  oninput="inFeeChange()"
+                                                aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-3">
+                                        <label class="control-label" for="changeFee">找零金额:</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="text" class="form-control" id="changeFee" name="hjInfoList[changeFee]" value="0.00"
+                                                readonly="readonly" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-3">
+                                        <label class="control-label" for="owemoney">欠费金额:</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input type="text" class="form-control" id="owemoney" name="hjInfoList[owemoney]" value="0.00"
+                                                readonly="readonly" aria-label="Amount (to the nearest dollar)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input id="btnSubmit1" class="btn btn-primary" type="button" value="Submit" onclick="submit()" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

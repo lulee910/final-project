@@ -28,10 +28,10 @@ router.post("/login",async (req, res) =>{
     const flag = await register.login(loginInfo.username, loginInfo.passwd);
     if(flag){
         let menuList = [
-            {parent_id:1, child_id:[{name:"Drug Charge",href:"/drugCharge"},{name:"Charge Summary"}]},
+            {parent_id:1, child_id:[{name:"Drug Charge",href:"/drugCharge"},{name:"Charge Summary",href:"/chargeSummary"}]},
             {parent_id:2, child_id:[{name:"Daily Business Statement"},{name:"Performance Summary Statement"}]},
             {parent_id:3, child_id:[{name:"Drug Info"}]},
-            {parent_id:4, child_id:[{name:"User Management"},{name:"Doctor Info"},{name:"Data Maintenance"}]},
+            {parent_id:4, child_id:[{name:"User Management"},{name:"Doctor Info",href:"/doctorInfo"},{name:"Data Maintenance"}]},
         ]
         res.render("sys/sysIndex", {flag : false, menuList: menuList, head_script:"head_script"}); 
     }else{

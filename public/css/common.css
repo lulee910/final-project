@@ -1,0 +1,32 @@
+td.key{
+	background-color:#F8F8F8;
+	text-align:right;
+	vertical-align:middle;
+	font-weight:bold;
+	color: #000;
+}
+
+.control-group {
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px dotted #f1f1f1;
+}
+
+
+
+.number {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0 5px 0 5px;
+    color: #CC0033;
+}
+
+.lable-set{
+    position: relative;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 5px; 
+    width: 20px; 
+    float: left;
+}
