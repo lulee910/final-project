@@ -12,6 +12,11 @@ router.get("/", async (req, res) =>{
 router.post("/query", async (req, res) =>{
     let data = req.body;
     let hjInfoList = data.hjInfoList;
+    if(hjInfoList.feeDate[0] !=""){
+        hjInfoList.feeDate = { "$gte" : hjInfoList.feeDate[0], "$lte" : hjInfoList.feeDate[1] }
+    }else{
+        hjInfoList.feeDate = "";
+    }  
     let hjInfoData = await drugCharge.findhjInfo(hjInfoList);
     for(let i=0;i<hjInfoData.length; i++){
         let hjFeeInfoData = await drugCharge.findhjFeeInfo({chargesId : hjInfoData[i]._id});

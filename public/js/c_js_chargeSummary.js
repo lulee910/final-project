@@ -9,6 +9,8 @@ $(function () {
        locale: moment.locale('en-gb')
     });
 
+    $("#treeTable").treeTable({expandLevel : 1});
+
 });
 function page(n,s){
     $("#pageNo").val(n);

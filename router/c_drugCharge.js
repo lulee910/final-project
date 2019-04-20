@@ -10,7 +10,7 @@ feeId:"{{row.feeId}}",allNum:"{{row.allNum}}",drugsId:"{{row.drugsId}}"
 };
 
 router.get("/", async (req, res) =>{
-    res.render("charge/drugCharge", {head_script:"head_script",rowFlag :false, row : hjFeeInfoTpl}); 
+    res.render("charge/drugCharge", {head_script:"head_script", row : hjFeeInfoTpl}); 
 });
 
 
@@ -26,11 +26,11 @@ router.post("/", async (req, res) =>{
     let chargeFeeInfo = data.hjFeeInfoList;
     const ret = await drugCharge.addChargeInfo(chargeInfo,chargeFeeInfo);
     if(ret){
-        //res.render("charge/drugCharge", {head_script:"head_script", row : hjFeeInfoTpl}); 
+        res.render("charge/drugCharge", {head_script:"head_script",row : hjFeeInfoTpl, message: "Save success"}); 
     }else{
-
+        res.render("charge/drugCharge", {head_script:"head_script",row : hjFeeInfoTpl, message: "Save failed"}); 
     }
-    res.render("charge/drugCharge", {head_script:"head_script"}); 
+    
 
 });
 

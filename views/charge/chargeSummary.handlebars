@@ -45,7 +45,7 @@
     <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
     <div class="col-sm-3">
       <div class='input-group date'>
-                <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]" />
+                <input type='text' class="form-control" id='startDate' name="hjInfoList[feeDate]" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -54,7 +54,7 @@
     <label  class="lable-set control-label">to</label>
     <div class="col-sm-3">
       <div class='input-group date'>
-                <input type='text' class="form-control" id='endDate' name="hjInfoList[startDate]" />
+                <input type='text' class="form-control" id='endDate' name="hjInfoList[feeDate]" />
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -75,7 +75,7 @@
 
                 </select>
     </div>
- <input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" />
+ <input id="btnSubmit" class="btn btn-primary" type="submit" value="Query" />
         </div>
 
     </form>
@@ -85,29 +85,25 @@
     <table id="treeTable" class="table table-striped table-bordered table-condensed">
         <thead>
             <tr>
-                <th>流水号</th>
-                <th>患者姓名</th>
-                <th>联系方式</th>
-                <th>首诊医生</th>
-                <th>收费日期</th>
-                <th>收费总额</th>
-                <th>总收</th>
-                <th>找零</th>
-                <th>实收</th>
-                <th>补收</th>
-                <th>欠费</th>
-                <th>收费方式</th>
-                <th>收费人员</th>
-                <shiro:hasPermission name="hj:hjInfo:edit">
-                    <th width="100px">操作</th>
-                </shiro:hasPermission>
+                <th>Charge No.</th>
+                <th>Patient</th>
+                <th>Tel</th>
+                <th>Doctor</th>
+                <th>Charge Date</th>
+                <th>Total</th>
+                <th>Received</th>
+                <th>Change</th>
+                <th>Owemoney</th>
+                <th>Charge Type</th>
+                <th>Charger</th>
+                <th width="100px">Operating</th>
             </tr>
         </thead>
         <tbody>
             {{#each hjInfo}}
-            <tr id="{{chargesId}}" pid="0">
+            <tr id="{{_id}}" pid="0">
                 <td>
-                    <a href="javascript:;" onclick="treeTableTrtoggle('${hjInfo.chargesId}');">{{chargesId}}</a>
+                    <a href="javascript:;" onclick="treeTableTrtoggle('{{_id}}');">{{_id.generationTime}}</a>
                 </td>
                 <td>
                     {{name}}
@@ -119,30 +115,26 @@
                     {{firstDoc}}
                 </td>
                 <td>
-                    <fmt:formatDate value="{{feeDate}}" pattern="yyyy-MM-dd HH:mm:ss" />
+                   {{feeDate}}
                 </td>
                 <td class="number green">
-                    {{allFee}}
-                </td>
-                <td class="number grey">
-                    {{changeFee}}
+                    {{numFee}}
                 </td>
                 <td class="number" style="color: #000;">
                     {{inFee}}
                 </td>
-                <td class="number green">
-                    {{patchFee}}
+                <td class="number grey">
+                    {{changeFee}}
                 </td>
                 <td class="number grey">
                     {{owemoney}}
                 </td>
                 <td>
-                    {{feeType}}
+                    {{methodType}}
                 </td>
                 <td>
-                    {{feeName}}
+                    {{methodType}}
                 </td>
-                <shiro:hasPermission>
                     <td>
                         <a
                             href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&oldChargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2"><span
@@ -154,25 +146,19 @@
                         <a href="${ctx}/hj/hjInfo/delete?chargesId=${hjInfo.chargesId}"
                             onclick="return confirmx('确认要删除该划价收费吗？', this.href)">删除</a>
                     </td>
-                </shiro:hasPermission>
             </tr>
 
-            <tr id="1" pId="{{chargesId }}">
-
-                <th>项目类别</th>
-                <th colspan="3">项目名称</th>
-                <th colspan="2">项目规格</th>
-                <th colspan="2">项目数量</th>
-                <th>单位</th>
-                <th>单价(元)</th>
-                <th>单项累计</th>
-                <th>分组</th>
+            <tr id="1" pId="{{_id }}">
+                <th colspan="3">Druge Name</th>
+                <th colspan="2">Druge Type</th>
+                <th colspan="2">Num</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th colspan="2">Total</th>
+                <th colspan="2">Group</th>
             </tr>
-            {{#each hjFeeInfoList}}
-            <tr id="{{feeId}}" pId="{{chargesId}}">
-                <td>
-                    {{drugeType}}
-                </td>
+            {{#hjFeeInfoList}}
+            <tr id="{{_id}}" pId="{{chargesId}}">
                 <td colspan="3">
                     {{drugsName}}
                 </td>
@@ -183,25 +169,25 @@
                     {{allNum}}
                 </td>
                 <td>
-                    {{drugsUnit}}
+                    {{price1}}
                 </td>
                 <td>
                     {{drugsPrice}}
                 </td>
-                <td>
+                <td colspan="2"> 
                     {{numPrice}}
                 </td>
-                <td>
+                <td colspan="2">
                     {{groupId}}
                 </td>
             </tr>
-            {{/each}}
+            {{/hjFeeInfoList}}
             {{/each}}
             <tr>
                 <td colspan="15" style="text-align: right;width: 8%;">
-                    <b>总金额:</b><span class="number">11</span>元&nbsp;&nbsp;
-                    <b>实际收入:</b><span class="number">11</span>元&nbsp;&nbsp;
-                    <b>欠费金额:</b><span class="number">0</span>元&nbsp;&nbsp;
+                    <b>Total:</b>$<span class="number">11</span>&nbsp;&nbsp;
+                    <b>Total Received:</b>$<span class="number">11</span>&nbsp;&nbsp;
+                    <b>Total Owemoney</b>$<span class="number">0</span>&nbsp;&nbsp;
                 </td>
             </tr>
         </tbody>

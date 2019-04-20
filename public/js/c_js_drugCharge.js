@@ -46,7 +46,14 @@ function submit(){
 }
 
 $(function () {
-   
+   let message = $('#message').html();
+   if(message !=""){
+       if(message.indexOf("success") > -1){
+            toastr.success(message);
+       }else{
+            toastr.error(message);
+       }
+   }
     
     function addRow(list, idx, tpl, row) {
         var source   = $("#hjFeeInfoTpl").html();

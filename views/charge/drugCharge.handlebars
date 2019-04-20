@@ -14,7 +14,7 @@
 
 <body>
     <form id="inputForm" modelAttribute="hjInfo" action="/drugCharge" method="post" class="form-horizontal">
-        <sys:message content="${message}" />
+        <label id="message" class="hidden">{{message}}</label>
         <form:hidden path="chargesId" id="chargesId" /> 
         <form:hidden path="id" />
         <form:hidden path="oldChargesId" />
@@ -123,9 +123,7 @@
                             <th>Price</th>
                             <th>Total</th>
                             <th>Group ID</th>
-                            <shiro:hasPermission>
-                                <th width="10">&nbsp;</th>
-                            </shiro:hasPermission>
+                            <th width="10">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody id="hjFeeInfoList">
@@ -166,20 +164,20 @@
 							</td>
 							<td>
                                 <label id="hjFeeInfoList{{row.idx}}_price">{{row.price}}</label>
-								<input id="hjFeeInfoList{{row.idx}}_price1"  name="hjFeeInfoList[{{idx}}][price1]" type="hidden" value="{{row.price}}"/>
+								<input id="hjFeeInfoList{{row.idx}}_price1"  name="hjFeeInfoList[{{row.idx}}][price1]" type="hidden" value="{{row.price}}"/>
 								
 							</td>
 							<td>
 								<label id="hjFeeInfoList{{row.idx}}_numPrice">{{row.numPrice}}</label>
-								<input id="hjFeeInfoList{{row.idx}}_numPrice1"  name="hjFeeInfoList[{{idx}}][numPrice]" type="hidden" value="{{row.numPrice}}"/>
+								<input id="hjFeeInfoList{{row.idx}}_numPrice1"  name="hjFeeInfoList[{{row.idx}}][numPrice]" type="hidden" value="{{row.numPrice}}"/>
 							</td>
 							<td>
 								<input id="hjFeeInfoList{{row.idx}}_groupId" name="hjFeeInfoList[{{row.idx}}][groupId]" 
 								type="text" value="{{row.groupId}}" maxlength="2" style="width:20px;" onblur="javascript:changeGroup({{row.idx}});" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 							</td>
-                            <shiro:hasPermission ><td class="text-center" width="10">
-								<span class="close" onclick="delRow(this, '{{row.chargesId}}','{{row.feeId}}','{{row.allNum}}','{{row.drugsId}}')" title="删除">&times;</span>
-							</td></shiro:hasPermission>
+                            <td class="text-center" width="10">
+								<span class="close" onclick="delRow(this, '{{row.chargesId}}','{{row.feeId}}','{{row.allNum}}','{{row.drugsId}}')" title="delete">&times;</span>
+							</td>
 						</tr>
 					</script>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

@@ -3,112 +3,114 @@
 <head>
     <title>Charge Summary</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-store">
+
     {{> head_script}}
-    <script src="/public/js/c_js_chargeSummary.js"></script>
-    <script src="/public/autocomplete/jquery.autocomplete.js"></script>
-    <link rel="stylesheet" href="/public/autocomplete/jquery.autocomplete.css">
-    <meta name="decorator" content="default" />
+    <script src="/public/js/c_js_doctorInfo.js"></script>
+
 </head>
 
 <body>
-   <ul id="myTab" class="nav nav-tabs">
-            <li class="active"><a href="#login" data-toggle="tab">Sign In</a></li>
-            <li><a href="#reg" data-toggle="tab">Sign Up</a></li>
-        </ul>
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane fade in active" id="login">
-                <form id="searchForm" modelAttribute="departmentInfo" action="${ctx}/ks/departmentInfo/" method="post" class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
-			<li><label>科室名称：</label>
-				<form:input path="departmentName" htmlEscape="false" maxlength="30" class="input-medium"/>
-			</li>
-			<li><label>负责人：</label>
-				<form:input path="name" htmlEscape="false" maxlength="30" class="input-medium"/>
-			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form>
-	<sys:message content="${message}"/>
-	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr>
-				<th>科室名称</th>
-				<th>所属机构</th>
-				<th>负责人</th>
-				<th>联系电话</th>
-				<shiro:hasPermission name="ks:departmentInfo:edit"><th>操作</th></shiro:hasPermission>
-			</tr>
-		</thead>
-		<tbody>
-		<c:forEach items="${page.list}" var="departmentInfo">
-			<tr>
-				<td><a href="${ctx}/ks/departmentInfo/form?id=${departmentInfo.id}">
-					${departmentInfo.departmentName}
-				</a></td>
-				<td>
-					${departmentInfo.deviceName}
-				</td>
-				<td>
-					${departmentInfo.name}
-				</td>
-				<td>
-					${departmentInfo.tel}
-				</td>
-				<shiro:hasPermission name="ks:departmentInfo:edit"><td>
-    				<a href="${ctx}/ks/departmentInfo/form?id=${departmentInfo.id}">修改</a>
-					<a href="${ctx}/ks/departmentInfo/delete?id=${departmentInfo.id}" onclick="return confirmx('确认要删除该科室管理吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
-			</tr>
-		</c:forEach>
-		</tbody>
-	</table>
+    <label id="message" class="hidden">{{message}}</label>
+    <ul id="myTab" class="nav nav-tabs">
+        <li {{#if flag1}}class="active" {{/if}}><a href="#doctorList" data-toggle="tab">Doctor Information</a></li>
+        <li {{#if flag2}}class="active" {{/if}}><a href="#doctorAdd" data-toggle="tab">Doctor Add</a></li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="doctorList">
+            <br/>
+            <form id="searchForm" modelAttribute="hjInfo" action="/doctorInfo/query" method="post"
+                class="form-horizontal">
+                <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
+                <form:hidden path="feeType" />
+                <form:hidden path="feeFlag" />
+                <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+                <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control " id="name" name="name">
+                    </div>
+                    <input id="btnQuery" class="btn btn-primary" type="submit" value="Query" />
+                </div>
+            </form>
+            <br/>
+            <table id="contentTable" class="table table-striped table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>Fist Name</th>
+                        <th>Last Name</th>
+                        <th>Tel</th>
+                        <th width="10">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each doctorInfo}}
+                    <tr>
+                        <td><a href="/doctorInfo/update/{{_id}}">
+                                {{fistName}}
+                            </a></td>
+                        <td>
+                            {{lastName}}
+                        </td>
+                        <td>
+                            {{tel}}
+                        </td>
+                        <td>
+                            <span class="close" onclick="confirmx(this, '{{_id}}')" title="delete">&times;</span>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
 
-            </div>
-            <div class="tab-pane fade" id="reg">
-                <form id="inputForm" modelAttribute="departmentInfo" action="${ctx}/ks/departmentInfo/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<form:hidden path="serviceId" value="${fns:getUser().serviceId }"/>
-		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">科室名称：</label>
-			<div class="controls">
-				<form:input path="departmentName" htmlEscape="false" maxlength="30" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">所属机构：</label>
-			<div class="controls">
-			 <sys:treeselect id="device" name="device" value="${departmentInfo.device}" labelName="deviceName" labelValue="${departmentInfo.deviceName}"
-					title="机构" url="/sys/office/treeData" cssClass="required"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">负责人：</label>
-			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="30" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">联系电话：</label>
-			<div class="controls">
-				<form:input path="tel" htmlEscape="false" maxlength="22" class="input-xlarge "/>
-			</div>
-		</div>
-		<div class="form-actions">
-			<shiro:hasPermission name="ks:departmentInfo:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
-			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
-		</div>
-	</form>
-
-
-
-
-            </div>
         </div>
+        <div class="tab-pane fade {{#if flag2}}in active{{/if}}" id="doctorAdd">
+            <br/>
+            <form id="inputForm" modelAttribute="doctorInfo" action="/doctorInfo/save" method="post"
+                class="form-horizontal">
+                <form:hidden path="id" />
+                <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="fistName">Fist Name</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control " id="fistName" name="doctorInfo[fistName]"
+                                value={{#doctorData}}{{fistName}}{{/doctorData}}>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="lastName">Last Name</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control " id="lastName" name="doctorInfo[lastName]"
+                                value="{{#doctorData}}{{lastName}}{{/doctorData}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="tel">Tel</label>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control " id="tel" name="doctorInfo[tel]" value={{#doctorData}}{{tel}}{{/doctorData}}>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input id="btnSubmit" class="btn btn-primary" type="submit" value="submit" />&nbsp;
+                    <input id="btnCancel" class="btn" type="button" value="return" onclick="history.go(-1)" />
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -22,5 +22,6 @@ module.exports = {
     hjInfo: getCollectionFn("hjInfo"),
     lossInfo: getCollectionFn("lossInfo"),
     drugsInfo: getCollectionFn("drugsInfo"),
-    enterInfo: getCollectionFn("enterInfo")
+    enterInfo: getCollectionFn("enterInfo"),
+    doctorInfo: getCollectionFn("doctorInfo")
   };

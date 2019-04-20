@@ -49,14 +49,13 @@ module.exports = {
         try {
             const con_hjInfo = await hjInfo();
             const con_hjFeeInfo = await hjFeeInfo();
-            let in_hjFeeInfo, in_hjInfo = 0;
-            in_hjInfo = await con_hjInfo.insertOne(chargeInfo);
+            let in_hjInfo = await con_hjInfo.insertOne(chargeInfo);
             await con_hjFeeInfo.removeMany({ "chargesId": in_hjInfo.insertedId });
             if (in_hjInfo.insertedCount > 0) {
                 for (let i = 0; i < chargeFeeInfoList.length; i++) {
                     chargeFeeInfo = chargeFeeInfoList[i];
                     chargeFeeInfo["chargesId"] = in_hjInfo.insertedId;
-                    in_hjFeeInfo = await con_hjFeeInfo.insertOne(chargeFeeInfo);
+                    await con_hjFeeInfo.insertOne(chargeFeeInfo);
                 }
             }
             return true;
@@ -67,9 +66,10 @@ module.exports = {
 
     async findhjInfo(hjInfoList) {
         let findInfo = {};
-        for (let i = 0; i < hjInfoList.length; i++) {
-            if (hjInfoList[i] != "") {
-                findInfo.push(hjInfoList[i]);
+        let keys = Object.keys(hjInfoList);
+        for (let i = 0; i < keys.length; i++) {
+            if (hjInfoList[keys[i]] != "") {
+                findInfo[keys[i]] = hjInfoList[keys[i]];
             }
         }
         const con_hjInfo = await hjInfo();

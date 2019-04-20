@@ -9,7 +9,7 @@
        
        "showDuration": "300",//显示的动画时间
        
-       "hideDuration": "400",//消失的动画时间
+       "hideDuration": "600",//消失的动画时间
        
        "timeOut": "1000", //展现时间
        
