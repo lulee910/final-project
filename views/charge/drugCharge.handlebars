@@ -13,15 +13,10 @@
 </head>
 
 <body>
-    <form id="inputForm" modelAttribute="hjInfo" action="/drugCharge" method="post" class="form-horizontal">
+    <form id="inputForm" modelAttribute="hjInfo" action="/drugCharge/save" method="post" class="form-horizontal">
         <label id="message" class="hidden">{{message}}</label>
-        <form:hidden path="chargesId" id="chargesId" /> 
-        <form:hidden path="id" />
-        <form:hidden path="oldChargesId" />
-        <form:hidden path="temp2" />
-        <form:hidden path="feeType" />
-        <form:hidden path="feeName" value="${fns:getUser().name}" />
-        <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
+        <td class="hidden">
+		</td>
         <input id="Flag" type="hidden" />
         <div class="panel panel-default " id="panel">
             <div class="panel-heading">
@@ -33,8 +28,9 @@
                         <td class="key"><label for="firstDoc">Doctor</label></td>
                         <td><div>
                                 <select class="form-control" id="firstDoc" name="hjInfoList[firstDoc]">
-                                <option>1</option>
-                                <option>2</option>
+                                    {{#doctor}}
+                                <option>{{firstName}} {{lastName}}</option>
+                                {{/doctor}}
                             </select>
                         </div>
                             
@@ -52,7 +48,7 @@
                     <tr>
                         {{!#if hjInfo.feeType 1}}
                         <td class="key"><label for="tel">Contact Number</label> <span style="color:red">*</span></td>
-                        <td><div><input type="text" class="form-control" id="tel" name="tel"></td></div>
+                        <td><div><input type="text" class="form-control" id="tel" name="hjInfoList[tel]"></td></div>
                         {{!/if}}
                         <td class="key"><label for="feeDate">Charge Date</label> <span style="color:red">*</span></td>
                         <td>
@@ -145,7 +141,7 @@
                             <td class="hide">
                                 {{row.idx}}
                             </td>
-							<td class="hide">
+							<td class="hidden">
 								<input id="hjFeeInfoList{{row.idx}}_chargesId" name="hjFeeInfoList[{{row.idx}}][chargesId]" type="hidden" value="{{row.chargesId}}"/>
 								<input id="hjFeeInfoList{{row.idx}}_drugsId" name="hjFeeInfoList[{{row.idx}}][drugsId]" type="hidden" value="{{row.drugsId}}"/>
 								<input id="hjFeeInfoList{{row.idx}}_delFlag" name="hjFeeInfoList[{{row.idx}}][delFlag]" type="hidden" value="0"/>
@@ -206,14 +202,14 @@
                             </div>
                             <div class="control-group">
                                 <div class="row">
-                                    <div class="col-md-2 col-md-offset-3">
+                                    <div class="col-md-3 col-md-offset-2">
                                         <label class="control-label" for="methodType">Charge Type</label>
                                     </div>
                                     <div class="col-md-4">
                                         <select class="form-control" id="methodType" name="hjInfoList[methodType]">
-                                            <option></option>
-                                            <option>1</option>
-                                            <option>2</option>
+                                            <option value="1" label="Cash" />
+                                            <option value="2" label="Debit" />
+                                            <option value="3" label="Credit" />
                                         </select>
                                     </div>
                                 </div>
@@ -221,7 +217,7 @@
                             <div class="control-group">
                                 <div class="row">
                                     <div class="col-md-2 col-md-offset-3">
-                                        <label class="control-label" for="inFee">实收金额:</label>
+                                        <label class="control-label" for="inFee">Paid</label>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group">
@@ -235,7 +231,7 @@
                             <div class="control-group">
                                 <div class="row">
                                     <div class="col-md-2 col-md-offset-3">
-                                        <label class="control-label" for="changeFee">找零金额:</label>
+                                        <label class="control-label" for="changeFee">Change</label>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group">
@@ -249,7 +245,7 @@
                             <div class="control-group">
                                 <div class="row">
                                     <div class="col-md-2 col-md-offset-3">
-                                        <label class="control-label" for="owemoney">欠费金额:</label>
+                                        <label class="control-label" for="owemoney">Owed</label>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group">

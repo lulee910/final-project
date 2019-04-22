@@ -11,7 +11,24 @@ $(function () {
 
     $("#treeTable").treeTable({expandLevel : 1});
 
+    $('form').submit(function () {
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+        if(startDate !="" && endDate==""){
+            $('#endDate').focus();
+            toastr.error("Please input endDate");
+            return false;
+        }
+        if(startDate =="" && endDate !=""){
+            $('#startDate').focus();
+            toastr.error("Please input startDate");
+            return false;
+        }
+        return true;
+     });
+     document.getElementById("methodType")["7"].selected=true;
 });
+
 function page(n,s){
     $("#pageNo").val(n);
     $("#pageSize").val(s);

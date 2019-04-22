@@ -11,7 +11,7 @@
        
        "hideDuration": "600",//消失的动画时间
        
-       "timeOut": "1000", //展现时间
+       "timeOut": "1500", //展现时间
        
        "extendedTimeOut": "500",//加长展示时间
        

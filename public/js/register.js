@@ -16,9 +16,24 @@ $('.navbar').css('position', 'absolute');
         }
     })
 $(document).ready(function() {
+    let liFlag = $('#li_flag').html();
+    if(liFlag == "2"){
+        $('#li_login').removeClass('active');
+        $('#li_reg').addClass('active');
+        $('#login').removeClass('in active');
+        $('#reg').addClass('in active');
+    }
+
+   let message = $('#message').html();
+   if(message !=""){
+       if(message.indexOf("success") > -1){
+            toastr.success(message);
+       }else{
+            toastr.error(message);
+       }
+   }
 
 $("#passswd1").on('click', function() {
-    console.log($(this).val());
     var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;6-16 commonly used numbers, letters and common symbols, case sensitive</h6> <br > ';
     if ($(this).val() == "") {
         $("#passswd1Tip").html("");
@@ -30,9 +45,7 @@ $("#passswd1").on('click', function() {
 $("#passswd1").on('blur', function() {
     var keywd = $(this).val();
     if (keywd != '') {
-        console.log(keywd);
         var patt = /^[0-9a-zA-Z~!@#$%^&*()_+=-\[\]\;',./|:"<>?"\{\}]{6,16}$/;
-        console.log(patt.test(keywd));
         if (!patt.test(keywd)) {
             $("#passswd1Tip").html("");
             var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;Input password format error, 6-16 commonly used numbers, letters and common symbols, case sensitive</h6> <br > ';
@@ -53,8 +66,6 @@ $("#passswd1").on('blur', function() {
 $("#passswd2").on('blur', function() {
     var keywd = $(this).val();
     var keywd1 = $("#passswd1").val();
-    console.log(keywd);
-    console.log(keywd1);
     if (keywd != '') {
         if (keywd1 != keywd) {
             $("#passswd2Tip").html("");
@@ -81,7 +92,6 @@ $("#passswd2").on('blur', function() {
 });
 
 $("#usernameR").on("click", function() {
-    console.log("www");
     var text = '<h6 class="text-info"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;&nbsp;Please enter your username</h6> <br> ';
     if ($(this).val() == "") {
         $("#usernameTip").html("");
@@ -156,6 +166,5 @@ $("#loginBtn").on('click', function() {
     var sessionStorage = new window.sessionStorage();
     sessionStorage.setItem("username", $("#username").val());
     sessionStorage.setItem("passwd", $("#passwd").val());
-    console.log("session:%s-%s", sessionStorage.username, sessionStorage.passwd);
 });
 });

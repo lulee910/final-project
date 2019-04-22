@@ -12,8 +12,8 @@ router.get("/", async (req, res) =>{
 router.post("/query", async (req, res) =>{
     let data = req.body;
     let hjInfoList = data.hjInfoList;
-    if(hjInfoList.feeDate[0] !=""){
-        hjInfoList.feeDate = { "$gte" : hjInfoList.feeDate[0], "$lte" : hjInfoList.feeDate[1] }
+    if(hjInfoList.startDate !=""){
+        hjInfoList.feeDate = { "$gte" : hjInfoList.startDate, "$lte" : hjInfoList.endDate }
     }else{
         hjInfoList.feeDate = "";
     }  
@@ -22,7 +22,7 @@ router.post("/query", async (req, res) =>{
         let hjFeeInfoData = await drugCharge.findhjFeeInfo({chargesId : hjInfoData[i]._id});
         hjInfoData[i]["hjFeeInfoList"] = hjFeeInfoData;
     }
-    res.render("charge/chargeSummary", {head_script:"head_script", hjInfo : hjInfoData}); 
+    res.render("charge/chargeSummary", {head_script:"head_script", hjInfo : hjInfoData, queryList : data.hjInfoList}); 
 });
 
 module.exports = router;

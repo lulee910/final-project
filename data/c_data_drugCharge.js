@@ -49,6 +49,8 @@ module.exports = {
         try {
             const con_hjInfo = await hjInfo();
             const con_hjFeeInfo = await hjFeeInfo();
+            chargeInfo["feeName"] = loginName;
+            chargeInfo["serviceId"] = serviceId;
             let in_hjInfo = await con_hjInfo.insertOne(chargeInfo);
             await con_hjFeeInfo.removeMany({ "chargesId": in_hjInfo.insertedId });
             if (in_hjInfo.insertedCount > 0) {
@@ -72,6 +74,7 @@ module.exports = {
                 findInfo[keys[i]] = hjInfoList[keys[i]];
             }
         }
+        findInfo["serviceId"] = serviceId;
         const con_hjInfo = await hjInfo();
         const data = await con_hjInfo.find().toArray();
         return data;
