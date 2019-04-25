@@ -13,74 +13,90 @@
 </head>
 
 <body>
-    <form id="searchForm" modelAttribute="hjInfo" action="/chargeSummary/query" method="post"
-        class="form-horizontal" >
-        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
-        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
- <div class="form-group">
-    <label for="methodType" class="col-sm-2 control-label">Charge Type</label>
-    <div class="col-sm-2">
-      <select class="form-control" id="methodType" name="hjInfoList[methodType]">
-                    <option value="" label="All" />
-                    <option value="1" label="Cash" />
-                    <option value="2" label="Debit" />
-                    <option value="7" label="Credit" />
-    </select>
-    </div>
-    <label for="firstDoc" class="col-sm-1 control-label">Doctor</label>
-    <div class="col-sm-2">
-       <select class="form-control" id="firstDoc" name="hjInfoList[firstDoc]" value="{{queryList.firstDoc}}">
-                    <option value="1" label="dddddd" />
-                    <option value="2" label="eeeeee" />
-                </select>
-    </div>
-     <label for="name" class="col-sm-1 control-label">Patient</label>
-    <div class="col-sm-2">
-                <input type="text" class="form-control " id="name" name="hjInfoList[name]" value="{{queryList.name}}">
-    </div>
-  </div>
-
-<div class="form-group">
-    <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
-    <div class="col-sm-3">
-      <div class='input-group date'>
-                <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]" value="{{queryList.startDate}}"/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div> 
-    </div>
-    <label  class="lable-set control-label">to</label>
-    <div class="col-sm-3">
-      <div class='input-group date'>
-                <input type='text' class="form-control" id='endDate' name="hjInfoList[endDate]" value="{{queryList.endDate}}"/>
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div> 
-    </div>
-      <label for="feeName" class="col-sm-1 control-label">feeName</label>
-    <div class="col-sm-2">
-                <input type="text" class="form-control " id="feeName" name="hjInfoList[feeName]" value="{{queryList.feeName}}">
-    </div>
-  </div>
-
-<div class="form-group">
-    <label for="flag" class="col-sm-2 control-label">Arrears</label>
-    <div class="col-sm-3">
-      <select class="form-control" id="Arrears" name="hjInfoList[flag]"  value="{{queryList.flag}}">
-        <option value="" label="" />
-        <option value="1" label="Yes" />
-        <option value="2" label="No" />
-
-     </select>
-    </div>
- <input id="btnSubmit" class="btn btn-primary" type="submit" onsubmit="return btnSubmit();"  value="Query" />
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <strong><span>Query Information</span></strong>
         </div>
+        <div class="panel-body">
 
-    </form>
-     <br />
-    <sys:message content="${message}" />
+            <form id="searchForm" modelAttribute="hjInfo" action="/chargeSummary/query" method="post"
+                class="form-horizontal">
+                <label id="pagecount" class="hidden">{{pageCount}}</label>
+                <input id="pageNo" name="pageNo" type="hidden" value="{{pageNo}}" />
+                <div class="form-group">
+                    <label for="methodType" class="col-sm-2 control-label">Charge Type</label>
+                    <div class="col-sm-2">
+                        <label id="lab_methodType" class="hidden">{{queryList.methodType}}</label>
+                        <select class="form-control" id="methodType" name="hjInfoList[methodType]">
+                            <option value="" label="All" />
+                            <option value="1" label="Cash" />
+                            <option value="2" label="Debit" />
+                            <option value="3" label="Credit" />
+                        </select>
+                    </div>
+                    <label for="firstDoc" class="col-sm-1 control-label">Doctor</label>
+                    <div class="col-sm-2">
+                        <label id="lab_firstDoc" class="hidden">{{queryList.firstDoc}}</label>
+                        <select class="form-control" id="firstDoc" name="hjInfoList[firstDoc]">
+                            <option value="" label="All" />
+                            {{#doctor}}
+                            <option>{{firstName}} {{lastName}}</option>
+                            {{/doctor}}
+                        </select>
+                    </div>
+                    <label for="name" class="col-sm-1 control-label">Patient</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control " id="name" name="hjInfoList[name]"
+                            value="{{queryList.name}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+                    <div class="col-sm-3">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]"
+                                value="{{queryList.startDate}}" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <label class="lable-set control-label">to</label>
+                    <div class="col-sm-3">
+                        <div class='input-group date'>
+                            <input type='text' class="form-control" id='endDate' name="hjInfoList[endDate]"
+                                value="{{queryList.endDate}}" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <label for="feeName" class="col-sm-1 control-label">Charger</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control " id="feeName" name="hjInfoList[feeName]"
+                            value="{{queryList.feeName}}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="flag" class="col-sm-2 control-label">Arrears</label>
+                    <div class="col-sm-3">
+                        <label id="lab_Arrears" class="hidden">{{queryList.flag}}</label>
+                        <select class="form-control" id="Arrears" name="hjInfoList[flag]" value="{{queryList.flag}}">
+                            <option value="" label="" />
+                            <option value="1" label="Yes" />
+                            <option value="2" label="No" />
+                        </select>
+                    </div>
+                    <input id="btnSubmit" class="btn btn-primary" type="submit" onsubmit="return btnSubmit();"
+                        value="Query" />
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <br />
 
     <table id="treeTable" class="table table-striped table-bordered table-condensed">
         <thead>
@@ -115,7 +131,7 @@
                     {{firstDoc}}
                 </td>
                 <td>
-                   {{feeDate}}
+                    {{feeDate}}
                 </td>
                 <td class="number green">
                     {{numFee}}
@@ -133,19 +149,18 @@
                     {{methodType}}
                 </td>
                 <td>
-                    {{methodType}}
+                    {{feeName}}
                 </td>
-                    <td>
-                        <a
-                            href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&oldChargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2"><span
-                                style="color:red">补收</span></a></br>
-                        <a
-                            href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2">重复收费</a></br>
-                        <a
-                            href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=1">费用修改</a></br>
-                        <a href="${ctx}/hj/hjInfo/delete?chargesId=${hjInfo.chargesId}"
-                            onclick="return confirmx('确认要删除该划价收费吗？', this.href)">删除</a>
-                    </td>
+                <td>
+                    <a
+                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&oldChargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2"><span
+                            style="color:red">补收</span></a></br>
+                    <a
+                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2">重复收费</a></br>
+                    <a
+                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=1">费用修改</a></br>
+                    <a href="javascript:void(0);" onclick="confirmx(this,'{{_id}}')">删除</a>
+                </td>
             </tr>
 
             <tr id="1" pId="{{_id }}">
@@ -174,7 +189,7 @@
                 <td>
                     {{drugsPrice}}
                 </td>
-                <td colspan="2"> 
+                <td colspan="2">
                     {{numPrice}}
                 </td>
                 <td colspan="2">
@@ -185,14 +200,14 @@
             {{/each}}
             <tr>
                 <td colspan="15" style="text-align: right;width: 8%;">
-                    <b>Total:</b>$<span class="number">11</span>&nbsp;&nbsp;
-                    <b>Total Received:</b>$<span class="number">11</span>&nbsp;&nbsp;
-                    <b>Total Owemoney</b>$<span class="number">0</span>&nbsp;&nbsp;
+                    <b>Total:</b>$<span class="number" id="t_total">{{Total.total}}</span>&nbsp;&nbsp;
+                    <b>Total Received:</b>$<span class="number" id="t_received">{{Total.received}}</span>&nbsp;&nbsp;
+                    <b>Total Owemoney</b>$<span class="number" id="t_owemoney">{{Total.owemoney}}</span>&nbsp;&nbsp;
                 </td>
             </tr>
         </tbody>
     </table>
-
+    <ul class="pagination" id="pagination"></ul>
 </body>
 
 </html>

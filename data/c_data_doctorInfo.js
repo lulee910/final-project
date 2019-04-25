@@ -32,12 +32,20 @@ module.exports = {
 
     async update(doctorData){
         const con_doctorInfo = await doctorInfo();
-        await con_doctorInfo.updateOne({_id: doctorData._id, serviceId: serviceId}, doctorData);
+        let updateInfo ={$set:{
+            firstName : doctorData.firstName,
+            lastName : doctorData.lastName,
+            tel : doctorData.tel
+        }};
+        await con_doctorInfo.updateOne({_id: ObjectId(doctorData._id), serviceId: serviceId}, updateInfo);
+        let ret = await this.findById(doctorData._id);
+        return ret;
     },
 
     async delete(id){
         const con_doctorInfo = await doctorInfo();
-        await con_doctorInfo.removeOne({_id : ObjectId(id), serviceId:serviceId});
+        let ret = await con_doctorInfo.removeOne({_id : ObjectId(id), serviceId:serviceId});
+        return ret.deletedCount;
     }
 
 }

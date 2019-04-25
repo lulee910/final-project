@@ -33,5 +33,13 @@ module.exports = {
         const insertInfo = await _conlection.insertOne(userInfo);
         if(insertInfo.insertedCount == 0) throw "User creation failed";
         return true;
+    },
+
+    async changePassword(id, passWord){
+        const _conlection = await sysUser();
+        let md5 = crypto.createHash("md5");
+        let newPas = md5.update(passWord).digest("hex");
+        const user = await _conlection.update({_id: ObjectId(id)},{$set : {passWord : newPas}});
+        return user;
     }
 };

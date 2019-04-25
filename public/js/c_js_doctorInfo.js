@@ -29,10 +29,15 @@ function confirmx(obj,id){
         message: "Are you sure?",
         callback: function(result){ 
             if(result){
-                $.post('/drugInfo/deleteFeeId', {
-                    "id": id
+                $.post('/doctorInfo/delete', {
+                    "_id": id
                 }, function (data) {
-                    $(obj).parent().parent().remove();
+                    if(data > 0){
+                        $(obj).parent().parent().remove();
+                        toastr.success("Delete success");
+                    }else{
+                        toastr.error("Delete failed");
+                    }
                 });
             } 
         }

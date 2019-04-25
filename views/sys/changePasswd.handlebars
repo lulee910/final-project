@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <title>Charge Summary</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+    {{> head_script}}
+    <script src="/public/js/sys_js_changePasswd.js"></script>
+
+</head>
+
+<body>
+    <label id="message" class="hidden">{{message}}</label>
+            <br/>
+            <form id="inputForm"  action="/changePasswd/change" method="post"
+                class="form-horizontal">
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="passswd">Old PassWord</label> <span style="color:red">*</span>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="password" class="form-control " id="passswd" name="passswd" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="passswd1">New PassWord</label> <span style="color:red">*</span>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="password" class="form-control " id="passswd1" name="passswd1" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip" id="passswd1Tip"></div>
+                <div class="control-group">
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            <label class="control-label" for="passswd2">Confirm PassWord</label> <span style="color:red">*</span>
+                        </div>
+                        <div class="col-md-4">
+                             <input type="password" class="form-control " id="passswd2" name="passswd2" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip" id="passswd2Tip"></div>
+                <div class="form-actions">
+                    <input id="btnSubmit" class="btn btn-primary" type="submit" value="submit" />&nbsp;
+                </div>
+            </form>
+</body>
+
+</html>

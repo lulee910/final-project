@@ -19,7 +19,13 @@ router.post("/query", async (req, res) =>{
 router.post("/save", async (req,res) =>{
     let data = req.body;
     let doctorInfo = data.doctorInfo;
-    let ret = await doctor.add(doctorInfo);
+    let ret = null;
+    if(doctorInfo._id !=""){
+        ret = await doctor.update(doctorInfo);
+    }else{  
+        delete doctorInfo._id;
+        ret = await doctor.add(doctorInfo);
+    }
     res.render("sys/doctorInfo", {head_script:"head_script",doctorInfo: ret, message : "Save success", flag1 : true}); 
 
 });
@@ -32,9 +38,8 @@ router.get("/update/:id", async (req, res) =>{
 
 router.post("/delete", async (req, res) =>{
     let data = req.body;
-    let doctorInfo = data.doctorInfo;
-    let ret = await doctor.delete(id);
-    res.render("charge/chargeSummary", {head_script:"head_script", message : "Delete success"}); 
+    let ret = await doctor.delete(data._id);
+    res.json(ret);
 });
 
 module.exports = router;
