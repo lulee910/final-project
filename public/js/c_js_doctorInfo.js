@@ -12,15 +12,6 @@ $(function(){
             $('li[name="doctorAdd_tag "]').removeClass('active');
         }
     })
-
-   let message = $('#message').html();
-   if(message !=""){
-       if(message.indexOf("success") > -1){
-            toastr.success(message);
-       }else{
-            toastr.error(message);
-       }
-   }
 })
 
 function confirmx(obj,id){

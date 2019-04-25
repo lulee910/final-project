@@ -50,7 +50,8 @@
                         {{!#if hjInfo.feeType 1}}
                         <td class="key"><label for="tel">Contact Number</label> <span style="color:red">*</span></td>
                         <td>
-                            <div><input type="tel" class="form-control" id="tel" name="hjInfoList[tel]">
+                            <div><input type="tel" class="form-control" id="tel" name="hjInfoList[tel]" maxlength="10"
+                            onkeyup="this.value=this.value.replace(/\D/g,'')">
                         </td>
         </div>
         {{!/if}}
