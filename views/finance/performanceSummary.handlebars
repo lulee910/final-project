@@ -1,0 +1,63 @@
+<html lang="en">
+
+<head>
+    <title>Performance Summary Statement</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    
+    {{> head_script}}
+    <script src="/public/js/f_js_performanceSummary.js"></script>
+   
+</head>
+
+<body>
+    <form id="searchForm" modelAttribute="performanceSummary" action="/performanceSummary" method="post"
+        class="form-horizontal">
+        <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+        <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
+        <div class="form-group">
+            <label for="firstDoc" class="col-sm-1 control-label">Doctor</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="firstDoc">
+                <input id="enter" type="hidden" value="0" />
+            </div>
+            <label for="drugType" class="col-sm-2 control-label">Drug Type</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="drugType">
+                <input id="enter" type="hidden" value="0" />
+            </div>
+            <label for="feeName" class="col-sm-2 control-label">Fee Name</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" id="feeName">
+                <input id="enter" type="hidden" value="0" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+            <div class="col-sm-3">
+                <div class='input-group date'>
+                    <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]"
+                        value="{{queryList.startDate}}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
+            <label class="lable-set control-label">to</label>
+            <div class="col-sm-3">
+                <div class='input-group date'>
+                    <input type='text' class="form-control" id='endDate' name="hjInfoList[endDate]"
+                        value="{{queryList.endDate}}" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+        </div>
+    </form>
+    <sys:message content="${message}" />
+</body>
+
+</html>

@@ -7,7 +7,7 @@ const exphbs = require("express-handlebars");
 
 app.use("/public", static);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended : true }));
 
 app.engine("handlebars", exphbs({ defaultLayout: "register",partialsDir: ["views/partials/"] }));
 app.set("view engine", "handlebars");

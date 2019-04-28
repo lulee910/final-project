@@ -30,10 +30,10 @@ router.post("/login",async (req, res) =>{
     if(flag !=null){
         let menuList = [
             {parent_id:1, child_id:[{name:"Drug Charge",href:"/drugCharge"},{name:"Charge Summary",href:"/chargeSummary"}]},
-            {parent_id:2, child_id:[{name:"Daily Business Statement"},{name:"Performance Summary Statement"}]},
-            {parent_id:3, child_id:[{name:"Drug Info"}]},
+            {parent_id:2, child_id:[{name:"Daily Business Statement", href:"/dailyBusiness"},{name:"Performance Summary Statement", href:"/performanceSummary"}]},
+            {parent_id:3, child_id:[{name:"Drug Info", href:"/drugInfo"}]},
             {parent_id:4, child_id:[{name:"User Management",href:"/userInfo"},{name:"Doctor Info",href:"/doctorInfo"},{name:"Data Maintenance"}]},
-        ]
+        ];
         loginId = flag._id;
         loginName = flag.userName;
         serviceId = flag.serviceId;

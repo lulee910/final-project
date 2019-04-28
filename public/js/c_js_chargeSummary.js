@@ -1,12 +1,12 @@
 $(function () {
 
     $('#startDate').datetimepicker({
-        format: 'DD/MM/YYYY',
+        format: 'MM/DD/YYYY',
        locale: moment.locale('en-gb')
     });
 
     $('#endDate').datetimepicker({
-        format: 'DD/MM/YYYY',
+        format: 'MM/DD/YYYY',
        locale: moment.locale('en-gb')
     });
 

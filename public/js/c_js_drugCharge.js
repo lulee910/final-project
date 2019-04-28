@@ -124,7 +124,7 @@ $(function () {
     });
 
     $('#feeDate').datetimepicker({
-        format: 'DD/MM/YYYY HH:mm',
+        format: 'MM/DD/YYYY HH:mm',
        locale: moment.locale('en-gb')
     });
 

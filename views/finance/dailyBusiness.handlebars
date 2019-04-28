@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <title>Daily Business Statement</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    
+    {{> head_script}}
+    <script src="/public/js/f_js_dailyBusiness.js"></script>
+</head>
+
+<body>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="login">
+            <form id="searchForm" modelAttribute="dailyBusiness" action="/dailyBusiness" method="post"
+                class="form-horizontal">
+                <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
+                <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
+                <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
+                    <tbody>
+                        <tr>
+                            <td><label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+                                <div class="col-sm-3">
+                                    <div class='input-group date'>
+                                            <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]" value="{{queryList.startDate}}"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div> 
+                                </div>
+                          
+                                <label  class="lable-set control-label">to</label>
+                                <div class="col-sm-3">
+                                    <div class='input-group date'>
+                                            <input type='text' class="form-control" id='endDate' name="hjInfoList[endDate]" value="{{queryList.endDate}}"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div> 
+                                </div>
+                            </td>
+                            <td class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit"
+                                    value="Search" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <sys:message content="${message}" />
+        </div>
+    </div>
+</body>
+
+</html>
