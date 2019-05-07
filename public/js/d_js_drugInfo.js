@@ -1,15 +1,15 @@
 $(function(){
     $('.navbar').css('position', 'absolute');
-    $('li[name="doctorAdd_tag "]').on('click', function() {
+    $('li[name="drugAdd_tag "]').on('click', function() {
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $('li[name="doctorList_tag "]').removeClass('active');
+            $('li[name="drugList_tag "]').removeClass('active');
         }
     })
-    $('li[name="doctorList_tag "]').on('click', function() {
+    $('li[name="drugList_tag "]').on('click', function() {
         if (!$(this).hasClass('active')) {
             $(this).addClass('active');
-            $('li[name="doctorAdd_tag "]').removeClass('active');
+            $('li[name="drugAdd_tag "]').removeClass('active');
         }
     })
 
@@ -29,7 +29,7 @@ function confirmx(obj,id){
         message: "Are you sure?",
         callback: function(result){ 
             if(result){
-                $.post('/doctorInfo/deleteFeeId', {
+                $.post('/drugInfo/deleteFeeId', {
                     "id": id
                 }, function (data) {
                     $(obj).parent().parent().remove();

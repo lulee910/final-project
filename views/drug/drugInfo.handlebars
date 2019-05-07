@@ -10,12 +10,12 @@
 
 <body>
     <ul id="myTab" class="nav nav-tabs">
-        <li class="active"><a href="#login" data-toggle="tab">Search Drug</a></li>
-        <li><a href="#reg" data-toggle="tab">Add Drug</a></li>
+        <li {{#if flag1}} class="active" {{/if}}><a href="#drugList" data-toggle="tab">Search Drug</a></li>
+        <li {{#if flag2}}class="active" {{/if}}><a href="#drugAdd" data-toggle="tab">Add Drug</a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade in active" id="login">
+        <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="drugList">
             <form id="searchForm" modelAttribute="drugInfo" action="/drugInfo/query" method="post"
                 class="breadcrumb form-search">
                 <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
@@ -24,11 +24,9 @@
                     <tbody>
                         <tr>
                             <td class="key"><label for="drugName">Drug Name</label></td>
-                            <td><input type="text" class="form-control" id="drugName">
-                                <input id="enter" type="hidden" value="0" /></td>
+                            <td><input type="text" class="form-control" id="drugName" name="drugName"></td>
                             <td class="key"><label for="drugType">Drug Type</label></td>
-                            <td><input type="text" class="form-control" id="drugType">
-                                <input id="enter" type="hidden" value="0" /></td>
+                            <td><input type="text" class="form-control" id="drugType" name="drugType"></td>
                             <td class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit"
                                     value="Search" /></td>
                         </tr>
@@ -50,7 +48,9 @@
                 <tbody>
                     {{#each drugInfo}}
                     <tr id="{{_id}}" pid="0">
-                        <td>{{drugName}}</td>
+                        <td><a href="/doctorInfo/update/{{_id}}">
+                            {{drugName}}
+                            </a></td>
                         <td>{{drugSpec}}</td>
                         <td>{{drugType}}</td>
                         <td>{{drugUnit}}</td>
@@ -66,44 +66,46 @@
             </table>
         </div>
 
-        <div class="tab-pane fade" id="reg">
+        <div class="tab-pane fade {{#if flag2}}in active{{/if}}" id="drugAdd">
             <form id="inputForm" modelAttribute="drugInfo" action="/drugInfo/save" method="post" class="form-horizontal">
                 <form:hidden path="id" />
-                <form:hidden path="drugId" value="${fns:getUser().drugId }" />
+                <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
                 <sys:message content="${message}" />
                 <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
                     <tbody>
                         <tr>
                             <td class="key"><label for="drugName">Drug Name</label><span style="color:red">*</span></td>
-                            <td><input type="text" class="form-control" id="drugName">
-                                <input id="enter" type="hidden" value="0" /></td>
+                            <td><input type="text" class="form-control" id="drugName">      
+                                <input id="drugName" type="hidden" value="{{#drugData}}{{drugName}}{{/drugData}}" />
+                                <input type="text" class="hidden " name="drugInfo[_id]"
+                                value="{{#drugData}}{{_id}}{{/drugData}}" /></td>
                             <td class="key"><label for="drugType">Drug Type</label><span style="color:red">*</span></td>
                             <td><input type="text" class="form-control" id="drugType">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="drugtype" type="hidden" value="{{#drugData}}{{drugType}}{{/drugData}}" /></td>
                         </tr>
                         <tr>
                             <td class="key"><label for="barCode">Bar Code</label></td>
                             <td><input type="text" class="form-control" id="barCode">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="barCode" type="hidden" value="{{#drugData}}{{barCode}}{{/drugData}}" /></td>
                             <td class="key"><label for="drugSpec">Drug Spec</label></td>
                             <td><input type="text" class="form-control" id="drugSpec">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="drugSpec" type="hidden" value="{{#drugData}}{{drugSpec}}{{/drugData}}" /></td>
                         </tr>
                         <tr>
                             <td class="key"><label for="drugUnit">Drug Unit</label></td>
                             <td><input type="text" class="form-control" id="drugUnit">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="drugUnit" type="hidden" value="{{#drugData}}{{drugUnit}}{{/drugData}}" /></td>
                             <td class="key"><label for="drugPrice">Drug Price</label></td>
                             <td><input type="text" class="form-control" id="drugPrice">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="drugPrice" type="hidden" value="{{#drugData}}{{drugPrice}}{{/drugData}}" /></td>
                         </tr>
                         <tr>
                             <td class="key"><label for="SCDate">SC Date</label></td>
                             <td><input type="text" class="form-control" id="SCDate">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="SCDate" type="hidden" value="{{#drugData}}{{SCDate}}{{/drugData}}" /></td>
                             <td class="key"><label for="Remark">Remark</label></td>
                             <td><input type="text" class="form-control" id="Remark">
-                                <input id="enter" type="hidden" value="0" /></td>
+                                <input id="Remark" type="hidden" value="{{#drugData}}{{Remark}}{{/drugData}}" /></td>
                         </tr>
                         <tr>
                             <td></td>

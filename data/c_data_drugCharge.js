@@ -7,40 +7,40 @@ module.exports = {
     async getDrugInfo() {
         let data = [
             {
-                "drugsId": 1,
-                "drugsName": "布袋",
-                "TIAOXING": "11223344",
-                "drugsType": "1",
-                "drugsSpec": "个",
-                "drugsUnint": "个",
-                "price": "12"
+                "drugId": 1,
+                "drugName": "布袋",
+                "barCode": "11223344",
+                "drugType": "1",
+                "drugSpec": "个",
+                "drugUnint": "个",
+                "drugPrice": "12"
             },
             {
-                "drugsId": 2,
-                "drugsName": "布袋",
-                "TIAOXING": "11223344",
-                "drugsType": "1",
-                "drugsSpec": "个",
-                "drugsUnint": "个",
-                "price": "12"
+                "drugId": 2,
+                "drugName": "布袋",
+                "barCode": "11223344",
+                "drugType": "1",
+                "drugSpec": "个",
+                "drugUnint": "个",
+                "drugPrice": "12"
             },
             {
-                "drugsId": 3,
-                "drugsName": "布袋",
-                "TIAOXING": "11223344",
-                "drugsType": "1",
-                "drugsSpec": "个",
-                "drugsUnint": "个",
-                "price": "12"
+                "drugId": 3,
+                "drugName": "布袋",
+                "barCode": "11223344",
+                "drugType": "1",
+                "drugSpec": "个",
+                "drugUnint": "个",
+                "drugPrice": "12"
             },
             {
-                "drugsId": 4,
-                "drugsName": "布袋",
-                "TIAOXING": "11223344",
-                "drugsType": "1",
-                "drugsSpec": "个",
-                "drugsUnint": "个",
-                "price": "12"
+                "drugId": 4,
+                "drugName": "布袋",
+                "barCode": "11223344",
+                "drugType": "1",
+                "drugSpec": "个",
+                "drugUnint": "个",
+                "drugPrice": "12"
             }
         ]
         return data;
