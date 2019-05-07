@@ -4,6 +4,10 @@ const router = express.Router();
 const drugCharge = require("../data/c_data_drugCharge");
 const doctorData = require("../data/c_data_doctorInfo");
 
+const hjFeeInfoTpl = {drugsType:"{{row.drugsType}}",drugsName:"{{row.drugsName}}",
+idx:"{{idx}}",drugsSpec:"{{row.drugsSpec}}",price:"{{row.price}}",numPrice:"{{row.numPrice}}",groupId:"{{row.groupId}}",chargesId:"{{row.chargesId}}",
+feeId:"{{row.feeId}}",allNum:"{{row.allNum}}",drugsId:"{{row.drugsId}}"
+};
 var doctorInfoList = null;
 router.get("/", async (req, res) =>{
     var total = {
@@ -43,6 +47,13 @@ router.post("/query", async (req, res) =>{
     }
     res.render("charge/chargeSummary", {head_script:"head_script", hjInfo : hjInfoData, queryList : data.hjInfoList, 
                 doctor: doctorInfoList,pageCount :hjInfoDataRet.pageSize, pageNo:page, Total:total}); 
+});
+
+router.get("/update/*", async (req, res) =>{
+    let id = req.params[0];
+    let flag = req.query.Flag;
+    let hjInfo = await drugCharge.findhjInfoById(id);
+    res.render("charge/drugCharge", {head_script:"head_script", row : hjFeeInfoTpl, hjInfoList: hjInfo, hjFeeData: id, doctor: doctorInfoList,Flag : flag});  
 });
 
 router.post("/delete", async (req, res) =>{

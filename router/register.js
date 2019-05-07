@@ -46,11 +46,11 @@ router.post("/login",async (req, res) =>{
 router.post("/register",async (req, res) =>{
     var loginInfo = req.body;
     try{
-        const flag = await register.register(loginInfo.usernameR, loginInfo.passswd1);
+        const flag = await register.register(loginInfo.usernameR, loginInfo.passwd1);
         res.render("sys/main", {flag :true, message:"Registered successfully", head_script:"head_script"});
     }catch(e){
         res.render("sys/main", {flag :true, message: e, head_script:"head_script", liFlag:2,
-        usernameR :loginInfo.usernameR, passswd1: loginInfo.passswd1, passswd2: loginInfo.passswd2});
+        usernameR :loginInfo.usernameR, passwd1: loginInfo.passwd1, passwd2: loginInfo.passwd2});
     }     
  });
 
