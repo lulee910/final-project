@@ -69,12 +69,10 @@ $(function () {
         }else{
             counts = parseInt(pagecount/pagesize)+1;
         }
-        //只有一页内容
         if(pagecount<=pagesize){pagehtml="";}
-        //大于一页内容
         if(pagecount>pagesize){
             if(currentpage>1){
-                pagehtml+= '<li><a href="javascript:void(0);" onclick="page('+(currentpage-1)+') ">上一页</a></li>';
+                pagehtml+= '<li><a href="javascript:void(0);" onclick="page('+(currentpage-1)+') "><<</a></li>';
             }
             for(var i=0;i<counts;i++){
                 if(i>=(currentpage-3) && i<(currentpage+3)){
@@ -87,7 +85,7 @@ $(function () {
                 }
             }
             if(currentpage<counts){
-                pagehtml+= '<li><a href="javascript:void(0);" onclick="page('+(currentpage+1)+') ">下一页</a></li>';
+                pagehtml+= '<li><a href="javascript:void(0);" onclick="page('+(currentpage+1)+') ">>></a></li>';
             }
         }
         $("#pagination").html(pagehtml);

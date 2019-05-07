@@ -46,7 +46,13 @@ module.exports = {
         return data;
     },
 
-    async addChargeInfo(chargeInfo, chargeFeeInfoList) {
+    async findhjInfoById(id) {
+        const con_hjInfo = await hjInfo();
+        const data = await con_hjInfo.findOne({_id:ObjectId(id)});
+        return data;
+    },
+
+    async addChargeInfo(chargeInfo, chargeFeeInfoList,flag) {
         try {
             const con_hjInfo = await hjInfo();
             const con_hjFeeInfo = await hjFeeInfo();
@@ -56,18 +62,25 @@ module.exports = {
             chargeInfo["numFee"] = parseFloat(chargeInfo["numFee"]);
             chargeInfo["changeFee"] = parseFloat(chargeInfo["changeFee"]);
             chargeInfo["owemoney"] = parseFloat(chargeInfo["owemoney"]);
-            let in_hjInfo = await con_hjInfo.insertOne(chargeInfo);
-            await con_hjFeeInfo.removeMany({ "chargesId": in_hjInfo.insertedId });
-            if (in_hjInfo.insertedCount > 0) {
+            let id = chargeInfo["_id"];
+            delete chargeInfo["_id"];
+            var in_hjInfo = null;
+            if(flag=="2"){
+                in_hjInfo = await con_hjInfo.updateOne({_id : ObjectId(id)},{$set:chargeInfo});
+                await con_hjFeeInfo.removeMany({ "chargesId": ObjectId(id) });
+            }
+            if(flag =="1" || flag=="3"){
+                in_hjInfo = await con_hjInfo.insertOne(chargeInfo);
+                id = in_hjInfo.insertedId;
+            }
                 for (let i = 0; i < chargeFeeInfoList.length; i++) {
                     chargeFeeInfo = chargeFeeInfoList[i];
-                    chargeFeeInfo["chargesId"] = in_hjInfo.insertedId;
+                    chargeFeeInfo["chargesId"] = ObjectId(id);
                     chargeFeeInfo["allNum"] = parseInt(chargeFeeInfo["allNum"]);
                     chargeFeeInfo["price1"] = parseFloat(chargeFeeInfo["price1"]);
                     chargeFeeInfo["numPrice"] = parseFloat(chargeFeeInfo["numPrice"]);
                     await con_hjFeeInfo.insertOne(chargeFeeInfo);
                 }
-            }
             return true;
         } catch (e) {
             return false;

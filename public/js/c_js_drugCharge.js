@@ -46,15 +46,7 @@ function submit(){
 }
 
 $(function () {
-   let message = $('#message').html();
-   if(message !=""){
-       if(message.indexOf("success") > -1){
-            toastr.success(message);
-       }else{
-            toastr.error(message);
-       }
-   }
-    
+
     function addRow(list, idx, tpl, row) {
         var source   = $("#hjFeeInfoTpl").html();
         var template = Handlebars.compile(source);
@@ -220,6 +212,29 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         numFee();
     });
 
+    var data = $('#hjFeeData').html();
+    if(data !=""){
+        $.post('/drugCharge/getHjFeeInfo', {
+            "id": data
+        }, function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i]["allPrice"] = data[i]["drugsPrice"] * data[i]["allNum"];
+                addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data[i]);
+                hjFeeInfoRowIdx = hjFeeInfoRowIdx + 1;
+            }
+            numFee();
+        });
+    }
+
+    if($("#firstDoc")){
+        let select = document.getElementById('firstDoc');  
+        for (let i = 0; i < select.options.length; i++){  
+            if (select.options[i].value == $('#lab_firstDoc').html()){  
+                select.options[i].selected = true;  
+                break;  
+            }  
+        }
+     }
 });
 
 function numFee() {
@@ -235,14 +250,6 @@ function numFee() {
 }
 
 var hjFeeInfoRowIdx = 0, hjFeeInfoTpl = $("#hjFeeInfoTpl").html().replace(/(\/\/\<!\-\-)|(\/\/\-\->)/g, "");
-$(document).ready(function () {
-    var data = [1, 2, 3, 4, 5, 6, 7, 8]
-    for (var i = 0; i < data.length; i++) {
-        data[i]["allPrice"] = data[i]["drugsPrice"] * data[i]["allNum"];
-        addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data[i]);
-        hjFeeInfoRowIdx = hjFeeInfoRowIdx + 1;
-    }
-});
 function claim(idx) {
     var l1 = $("#hjFeeInfoList" + idx + "_allNum").val();
     var l2 = $("#hjFeeInfoList" + idx + "_price").html();

@@ -153,13 +153,10 @@
                 </td>
                 <td>
                     <a
-                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&oldChargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2"><span
-                            style="color:red">补收</span></a></br>
+                        href="/chargeSummary/update/{{_id}}?Flag=3">Duplicate charge</a></br>
                     <a
-                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=2">重复收费</a></br>
-                    <a
-                        href="${ctx}/hj/hjInfo/form?chargesId=${hjInfo.chargesId}&&id=${hjInfo.chargesId}&&feeType=${hjInfo.feeType}&&temp2=1">费用修改</a></br>
-                    <a href="javascript:void(0);" onclick="confirmx(this,'{{_id}}')">删除</a>
+                        href="/chargeSummary/update/{{_id}}?Flag=2">Update</a></br>
+                    <a href="javascript:void(0);" onclick="confirmx(this,'{{_id}}')">Delete</a>
                 </td>
             </tr>
 
@@ -184,10 +181,10 @@
                     {{allNum}}
                 </td>
                 <td>
-                    {{price1}}
+                    {{price}}
                 </td>
                 <td>
-                    {{drugsPrice}}
+                    {{price}}
                 </td>
                 <td colspan="2">
                     {{numPrice}}
