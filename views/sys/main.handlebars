@@ -1,4 +1,4 @@
- <div class="container" style="position: absolute; top: 25%;left: 50%; height: 300px;  margin-top: -100px; width: 450px;  margin-left: -200px;  ">
+ <div class="container login-div">
         <ul id="myTab" class="nav nav-tabs">
             <li id="li_login" class="active"><a href="#login" data-toggle="tab">Sign In</a></li>
             <li id="li_reg"><a href="#reg" data-toggle="tab">Sign Up</a></li>
@@ -20,18 +20,18 @@
                     </div>
                     {{#if error}}
                      <div class="tip" id="error">
-                     <h6 class="text-info" style="color:rgb(255, 60, 0)"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;The username and/or password you specified are not correct.</h6>
+                     <h6 class="text-info red-color"> &nbsp;&nbsp;<span class="glyphicon glyphicon-exclamation-sign"></span> &nbsp;The username and/or password you specified are not correct.</h6>
                      </div>
                     {{/if}}
                     <div class="form-group">
                         <div class="">
-                            <div class="checkbox pull-left" style="display:inline-block;margin-left:5%">
+                            <div class="checkbox pull-left remember-me">
                                 &nbsp;&nbsp;<label><input type="checkbox" id="remember">remember me</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" id="loginBtn" class="btn btn-primary btn-lg" value="Sign In" style="width:92%;margin-left:4%">
+                        <input type="submit" id="loginBtn" class="btn btn-primary btn-lg login-btn" value="Sign In">
                     </div>
                 </form>
             </div>
@@ -65,7 +65,7 @@
                     <div class="tip" id="passwd2Tip"></div>
                     <br>
                     <div class="form-group">
-                        <input type="submit" id="registerBtn" class="btn btn-primary btn-lg " style="width:92%;margin-left:4% " value="Sign Up">
+                        <input type="submit" id="registerBtn" class="btn btn-primary btn-lg login-btn" value="Sign Up">
                     </div>
                 </form>
             </div>

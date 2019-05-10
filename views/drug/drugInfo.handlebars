@@ -20,7 +20,7 @@
                 class="breadcrumb form-search">
                 <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
                 <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
-                <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
+                <table class="table table-bordered table-condensed table-bottom" >
                     <tbody>
                         <tr>
                             <td class="key"><label for="drugName">Drug Name</label></td>
@@ -71,15 +71,15 @@
                 <form:hidden path="id" />
                 <form:hidden path="serviceId" value="${fns:getUser().serviceId }" />
                 <sys:message content="${message}" />
-                <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
+                <table class="table table-bordered table-condensed table-bottom" >
                     <tbody>
                         <tr>
-                            <td class="key"><label for="drugName">Drug Name</label><span style="color:red">*</span></td>
+                            <td class="key"><label for="drugName">Drug Name</label><span class="red-color">*</span></td>
                             <td><input type="text" class="form-control" id="drugName">      
                                 <input id="drugName" type="hidden" value="{{#drugData}}{{drugName}}{{/drugData}}" />
                                 <input type="text" class="hidden " name="drugInfo[_id]"
                                 value="{{#drugData}}{{_id}}{{/drugData}}" /></td>
-                            <td class="key"><label for="drugType">Drug Type</label><span style="color:red">*</span></td>
+                            <td class="key"><label for="drugType">Drug Type</label><span class="red-color">*</span></td>
                             <td><input type="text" class="form-control" id="drugType">
                                 <input id="drugtype" type="hidden" value="{{#drugData}}{{drugType}}{{/drugData}}" /></td>
                         </tr>
