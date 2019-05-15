@@ -55,7 +55,7 @@ router.get("/update/*", async (req, res) =>{
     let hjInfo = await drugCharge.findhjInfoById(id);
     if(flag == "3"){
         let dateTime = new Date();
-        let date = dateTime.getMonth() + "/" + dateTime.getDay() + "/" + dateTime.getFullYear() +" " 
+        let date = dateTime.getMonth() +1 + "/" + dateTime.getDate() + "/" + dateTime.getFullYear() +" " 
         + dateTime.getHours() + ":" + dateTime.getMinutes();
         hjInfo["feeDate"] = date;
     }

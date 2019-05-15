@@ -12,7 +12,7 @@ router.post("/query", async (req, res) =>{
     let data = req.body;
     let findInfo = data.findInfo;
     if(findInfo.startDate !=""){
-        findInfo.feeDate = { "$gte" : findInfo.startDate, "$lte" : findInfo.endDate }
+        findInfo.feeDate = { "$gte" : findInfo.startDate, "$lte" : findInfo.endDate + " 24:00"  }
     }else{
         findInfo.feeDate = "";
     } 

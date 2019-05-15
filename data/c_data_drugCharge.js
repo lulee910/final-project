@@ -92,7 +92,8 @@ module.exports = {
             }}
         ]).sort({feeDate : -1}).toArray();
         let total = await con_hjInfo.aggregate([{$match:findInfo},{$group:{_id:null, total:{ $sum:"$numFee"},
-        received:{ $sum:"$inFee"},owemoney:{ $sum:"$owemoney"}}}]).toArray();
+        received:{ $sum:"$inFee"},changeFee:{$sum:"$changeFee"}, owemoney:{ $sum:"$owemoney"}}}]).toArray();
+        total[0]["received"] = total[0]["received"] - total[0]["changeFee"];
         let dataCount = data.length;
         data = data.slice(dex,dex+30);
         return {dataList : data, pageSize : dataCount, Total :total};

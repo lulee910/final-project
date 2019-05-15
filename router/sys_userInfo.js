@@ -9,9 +9,9 @@ router.get("/", async (req, res) =>{
 
 router.post("/query", async (req, res) =>{
     let data = req.body;
-    let name = data.name;
+    let name = data.userName;
     let userData = await user.findByName(name);
-    res.render("sys/userInfo", {head_script:"head_script", userInfo : userData, flag1 : true}); 
+    res.render("sys/userInfo", {head_script:"head_script", userInfo : userData, searchName:name, flag1 : true}); 
 });
 
 router.post("/save", async (req,res) =>{

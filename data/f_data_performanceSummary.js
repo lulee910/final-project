@@ -55,7 +55,7 @@ module.exports = {
                 {
                     $project : {
                         firstDoc : "$_id",
-                        drugType : "$list._id.drugType",
+                        drugType : {"$cond" : [ { "$eq" : [ "$list._id.drugType" , "1"]} , "Prescription" , "non-Prescription"]},
                         totalIn : "$list.totalIn",
                         total : "$Tatol"
                     }

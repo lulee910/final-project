@@ -19,7 +19,7 @@
                 <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
                     <tbody>
                         <tr>
-                            <td><label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+                            <td><label for="startDate" class="col-sm-2 control-label">Charge Date</label>
                                 <div class="col-sm-3">
                                     <div class='input-group date'>
                                             <input type='text' class="form-control" id='startDate' name="findInfo[startDate]" value="{{queryList.startDate}}"/>
@@ -47,7 +47,7 @@
             </form>
             </div>
             </div>
-            </br>
+            <br>
             <table id="contentTable" class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
@@ -71,7 +71,7 @@
                     </tr>
                     {{/each}}
                     <tr>
-                <td colspan="15" class="total-info">
+                <td colspan="6" class="total-info">
                     <b>Total:</b>$<span class="number" id="t_total">{{#Total}}{{total}}{{/Total}}</span>&nbsp;&nbsp;
                     <b>Total Received:</b>$<span class="number" id="t_received">{{#Total}}{{received}}{{/Total}}</span>&nbsp;&nbsp;
                     <b>Total Owemoney</b>$<span class="number" id="t_owemoney">{{#Total}}{{owemoney}}{{/Total}}</span>&nbsp;&nbsp;

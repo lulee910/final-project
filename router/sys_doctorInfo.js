@@ -13,7 +13,7 @@ router.post("/query", async (req, res) =>{
     let data = req.body;
     let name = data.name;
     let doctorData = await doctor.findByName(name);
-    res.render("sys/doctorInfo", {head_script:"head_script", doctorInfo : doctorData, flag1 : true}); 
+    res.render("sys/doctorInfo", {head_script:"head_script", doctorInfo : doctorData, searchName : name, flag1 : true}); 
 });
 
 router.post("/save", async (req,res) =>{

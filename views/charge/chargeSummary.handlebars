@@ -83,7 +83,7 @@
                     <div class="col-sm-3">
                         <label id="lab_Arrears" class="hidden">{{queryList.flag}}</label>
                         <select class="form-control" id="Arrears" name="hjInfoList[flag]">
-                            <option value=""></option>
+                            <option value="" label=" "></option>
                             <option value="1" label="Yes"></option>
                             <option value="2" label="No"></option>
                         </select>
@@ -152,9 +152,9 @@
                 </td>
                 <td>
                     <a
-                        href="/chargeSummary/update/{{_id}}?Flag=3">Duplicate charge</a></br>
+                        href="/chargeSummary/update/{{_id}}?Flag=3">Duplicate charge</a><br>
                     <a
-                        href="/chargeSummary/update/{{_id}}?Flag=2">Update</a></br>
+                        href="/chargeSummary/update/{{_id}}?Flag=2">Update</a><br>
                     <a href="javascript:void(0);" onclick="confirmx(this,'{{_id}}')">Delete</a>
                 </td>
             </tr>
