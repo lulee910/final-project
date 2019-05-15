@@ -1,5 +1,5 @@
 {
-  "name": "final_project",
+  "name": "Web_Study_Group_Final_Project",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,7 +7,7 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Lu Li",
+  "author": "Web Study Group",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
