@@ -7,13 +7,19 @@ const crypto = require("crypto");
 module.exports = {
     async findAll(){
         const con_userInfo = await userInfo();
-        const data = await con_userInfo.find({serviceId : serviceId}).toArray();
+        const data = await con_userInfo.find({serviceId : serviceId, remarks:{$ne : "administrator"}}).toArray();
         return data;
     },
 
     async findByName(name){
         const con_userInfo = await userInfo();
-        const data = await con_userInfo.find({serviceId : serviceId, userName : new RegExp(name)}).toArray();
+        const data = await con_userInfo.find({serviceId : serviceId, userName : new RegExp(name), remarks:{$ne : "administrator"}}).toArray();
+        return data;
+    },
+
+    async findUser(name){
+        const con_userInfo = await userInfo();
+        const data = await con_userInfo.find({userName :name}).toArray();
         return data;
     },
 
@@ -24,12 +30,18 @@ module.exports = {
     },
 
     async add(userData){
+        let userCheck = await this.findUser(userData["userName"]);
+        if(userCheck !=null) throw "This user already exists";
         const con_userInfo = await userInfo();
         let md5 = crypto.createHash("md5");
         let newPas = md5.update(userData["passwd"]).digest("hex");
-        userData["passwd"] = newPas;
-        userData["serviceId"] = serviceId;
-        let in_userInfo = await con_userInfo.insertOne(userData);
+        let addInfo = {
+            userName : userData["userName"],
+            passWord : newPas,
+            remarks  : "normal",
+            serviceId: serviceId
+        }
+        let in_userInfo = await con_userInfo.insertOne(addInfo);
         let ret = await this.findById(in_userInfo.insertedId);
         return ret;
     },

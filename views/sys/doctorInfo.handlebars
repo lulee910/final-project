@@ -19,11 +19,11 @@
         <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="doctorList">
             <div class="panel panel-default ">
             <div class="panel-heading">
-                <strong><span>Query Information</span></strong>
+                <strong><span>Search Information</span></strong>
             </div>
             <div class="panel-body">
 
-            <form id="searchForm" modelAttribute="hjInfo" action="/doctorInfo/query" method="post"
+            <form id="searchForm"  action="/doctorInfo/query" method="post"
                 class="form-horizontal">
                 <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
                 <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
@@ -32,7 +32,7 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control " id="name" name="name">
                     </div>
-                    <input id="btnQuery" class="btn btn-primary" type="submit" value="Query" />
+                    <input id="btnQuery" class="btn btn-primary" type="submit" value="Search" />
                 </div>
             </form>
             </div>

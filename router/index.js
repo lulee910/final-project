@@ -11,8 +11,7 @@ const path = require("path");
 
 
 const constructorMethod = app =>{
-    app.use("/login", register);
-    app.use("/register", register);
+   
     app.use("/drugCharge", drugCharge);
     app.use("/drugInfo", drugInfo);
     app.use("/dailyBusiness", dailyBusiness);

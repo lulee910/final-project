@@ -3,7 +3,6 @@
 <head>
     <title>Charge Summary</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-store">
     {{> head_script}}
     <script src="/public/js/c_js_chargeSummary.js"></script>
     <script src="/public/autocomplete/jquery.autocomplete.js"></script>
@@ -15,11 +14,11 @@
 <body>
     <div class="panel panel-default ">
         <div class="panel-heading">
-            <strong><span>Query Information</span></strong>
+            <strong><span>Search Information</span></strong>
         </div>
         <div class="panel-body">
 
-            <form id="searchForm" modelAttribute="hjInfo" action="/chargeSummary/query" method="post"
+            <form id="searchForm"  action="/chargeSummary/query" method="post"
                 class="form-horizontal">
                 <label id="pagecount" class="hidden">{{pageCount}}</label>
                 <input id="pageNo" name="pageNo" type="hidden" value="{{pageNo}}" />
@@ -28,17 +27,17 @@
                     <div class="col-sm-2">
                         <label id="lab_methodType" class="hidden">{{queryList.methodType}}</label>
                         <select class="form-control" id="methodType" name="hjInfoList[methodType]">
-                            <option value="" label="All" />
-                            <option value="1" label="Cash" />
-                            <option value="2" label="Debit" />
-                            <option value="3" label="Credit" />
+                            <option value="" label="All"></option>
+                            <option value="1" label="Cash"></option>
+                            <option value="2" label="Debit"></option>
+                            <option value="3" label="Credit"></option>
                         </select>
                     </div>
                     <label for="firstDoc" class="col-sm-1 control-label">Doctor</label>
                     <div class="col-sm-2">
                         <label id="lab_firstDoc" class="hidden">{{queryList.firstDoc}}</label>
                         <select class="form-control" id="firstDoc" name="hjInfoList[firstDoc]">
-                            <option value="" label="All" />
+                            <option value="" label="All"></option>
                             {{#doctor}}
                             <option>{{firstName}} {{lastName}}</option>
                             {{/doctor}}
@@ -52,7 +51,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+                    <label for="startDate" class="col-sm-2 control-label">Charge Date</label>
                     <div class="col-sm-3">
                         <div class='input-group date'>
                             <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]"
@@ -80,17 +79,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="flag" class="col-sm-2 control-label">Arrears</label>
+                    <label for="Arrears" class="col-sm-2 control-label">Arrears</label>
                     <div class="col-sm-3">
                         <label id="lab_Arrears" class="hidden">{{queryList.flag}}</label>
-                        <select class="form-control" id="Arrears" name="hjInfoList[flag]" value="{{queryList.flag}}">
-                            <option value="" label="" />
-                            <option value="1" label="Yes" />
-                            <option value="2" label="No" />
+                        <select class="form-control" id="Arrears" name="hjInfoList[flag]">
+                            <option value=""></option>
+                            <option value="1" label="Yes"></option>
+                            <option value="2" label="No"></option>
                         </select>
                     </div>
                     <input id="btnSubmit" class="btn btn-primary" type="submit" onsubmit="return btnSubmit();"
-                        value="Query" />
+                        value="Search" />
                 </div>
 
             </form>
@@ -110,9 +109,9 @@
                 <th>Received</th>
                 <th>Change</th>
                 <th>Owemoney</th>
-                <th>Charge Type</th>
+                <th >Charge Type</th>
                 <th>Charger</th>
-                <th width="100px">Operating</th>
+                <th >Operating</th>
             </tr>
         </thead>
         <tbody>
@@ -166,37 +165,33 @@
                 <th colspan="2">Num</th>
                 <th>Unit</th>
                 <th>Price</th>
-                <th colspan="2">Total</th>
-                <th colspan="2">Group</th>
+                <th colspan="3">Total</th>
             </tr>
             {{#hjFeeInfoList}}
             <tr id="{{_id}}" pId="{{chargesId}}">
                 <td colspan="3">
-                    {{drugsName}}
+                    {{drugName}}
                 </td>
                 <td colspan="2">
-                    {{drugsSpec}}
+                    {{drugType}}
                 </td>
                 <td colspan="2">
                     {{allNum}}
                 </td>
                 <td>
-                    {{price}}
+                   {{drugUnit}}
                 </td>
                 <td>
-                    {{price}}
+                    {{drugPrice}}
                 </td>
-                <td colspan="2">
+                <td colspan="3">
                     {{numPrice}}
-                </td>
-                <td colspan="2">
-                    {{groupId}}
                 </td>
             </tr>
             {{/hjFeeInfoList}}
             {{/each}}
             <tr>
-                <td colspan="15" class="total-info">
+                <td class="total-info " colspan="12">
                     <b>Total:</b>$<span class="number" id="t_total">{{Total.total}}</span>&nbsp;&nbsp;
                     <b>Total Received:</b>$<span class="number" id="t_received">{{Total.received}}</span>&nbsp;&nbsp;
                     <b>Total Owemoney</b>$<span class="number" id="t_owemoney">{{Total.owemoney}}</span>&nbsp;&nbsp;

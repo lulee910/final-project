@@ -19,7 +19,7 @@
         <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="userList">
             <div class="panel panel-default ">
             <div class="panel-heading">
-                <strong><span>Query Information</span></strong>
+                <strong><span>Search Information</span></strong>
             </div>
             <div class="panel-body">
 
@@ -80,9 +80,9 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control " id="userName" name="userInfo[userName]"
-                                value="{{#userInfo}}{{userName}}{{/userInfo}}" required />
+                                value="{{#updateInfo}}{{userName}}{{/updateInfo}}" {{#if read}}readonly="readonly"{{/if}} required />
                             <input type="text" class="hidden " name="userInfo[_id]"
-                            value="{{#userInfo}}{{_id}}{{/userInfo}}" />
+                            value="{{#updateInfo}}{{_id}}{{/updateInfo}}" />
                         </div>
                     </div>
                 </div>

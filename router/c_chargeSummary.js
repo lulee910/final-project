@@ -4,14 +4,14 @@ const router = express.Router();
 const drugCharge = require("../data/c_data_drugCharge");
 const doctorData = require("../data/c_data_doctorInfo");
 
-const hjFeeInfoTpl = {drugsType:"{{row.drugsType}}",drugsName:"{{row.drugsName}}",
-idx:"{{idx}}",drugsSpec:"{{row.drugsSpec}}",price:"{{row.price}}",numPrice:"{{row.numPrice}}",groupId:"{{row.groupId}}",chargesId:"{{row.chargesId}}",
+const hjFeeInfoTpl = {drugType:"{{row.drugType}}",drugName:"{{row.drugName}}",
+idx:"{{idx}}",drugSpec:"{{row.drugSpec}}",drugPrice:"{{row.drugPrice}}",numPrice:"{{row.numPrice}}",chargesId:"{{row.chargesId}}",
 feeId:"{{row.feeId}}",allNum:"{{row.allNum}}",drugsId:"{{row.drugsId}}"
 };
 var doctorInfoList = null;
 router.get("/", async (req, res) =>{
     var total = {
-        total : 0,
+        total : 0, 
         received : 0,
         owemoney : 0
     };
@@ -27,7 +27,7 @@ router.post("/query", async (req, res) =>{
         page =1;
     }
     if(hjInfoList.startDate !=""){
-        hjInfoList.feeDate = { "$gte" : hjInfoList.startDate, "$lte" : hjInfoList.endDate }
+        hjInfoList.feeDate = { "$gte" : hjInfoList.startDate, "$lte" : hjInfoList.endDate + " 24:00" }
     }else{
         hjInfoList.feeDate = "";
     }  
@@ -53,6 +53,12 @@ router.get("/update/*", async (req, res) =>{
     let id = req.params[0];
     let flag = req.query.Flag;
     let hjInfo = await drugCharge.findhjInfoById(id);
+    if(flag == "3"){
+        let dateTime = new Date();
+        let date = dateTime.getMonth() + "/" + dateTime.getDay() + "/" + dateTime.getFullYear() +" " 
+        + dateTime.getHours() + ":" + dateTime.getMinutes();
+        hjInfo["feeDate"] = date;
+    }
     res.render("charge/drugCharge", {head_script:"head_script", row : hjFeeInfoTpl, hjInfoList: hjInfo, hjFeeData: id, doctor: doctorInfoList,Flag : flag});  
 });
 

@@ -9,19 +9,20 @@
 </head>
 
 <body>
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade in active" id="login">
-            <form id="searchForm" modelAttribute="dailyBusiness" action="/dailyBusiness" method="post"
+    <div class="panel panel-default ">
+        <div class="panel-heading">
+            <strong><span>Search Information</span></strong>
+        </div>
+        <div class="panel-body">
+            <form id="searchForm"  action="/dailyBusiness/query" method="post"
                 class="form-horizontal">
-                <input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}" />
-                <input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}" />
                 <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
                     <tbody>
                         <tr>
                             <td><label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
                                 <div class="col-sm-3">
                                     <div class='input-group date'>
-                                            <input type='text' class="form-control" id='startDate' name="hjInfoList[startDate]" value="{{queryList.startDate}}"/>
+                                            <input type='text' class="form-control" id='startDate' name="findInfo[startDate]" value="{{queryList.startDate}}"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -31,7 +32,7 @@
                                 <label  class="lable-set control-label">to</label>
                                 <div class="col-sm-3">
                                     <div class='input-group date'>
-                                            <input type='text' class="form-control" id='endDate' name="hjInfoList[endDate]" value="{{queryList.endDate}}"/>
+                                            <input type='text' class="form-control" id='endDate' name="findInfo[endDate]" value="{{queryList.endDate}}"/>
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -44,37 +45,40 @@
                     </tbody>
                 </table>
             </form>
+            </div>
+            </div>
+            </br>
             <table id="contentTable" class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Total</th>
-                        <th>Received</th>
-                        <th>Owemoney</th>
-                        <th>Cash</th>
-                        <th>Card</th>
-                        <th>Remark</th>
+                        <th>Total Received</th>
+                        <th>Total Owemoney</th>
+                        <th>Total Cash</th>
+                        <th>Total Card</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each hjInfo}}
-                    <tr id="{{_id}}" pid="0">
-                        <td>{{feeDate}}</td>
-                        <td>{{numFee}}</td>
-                        <td>{{inFee}}</td>
-                        <td>{{Owemoney}}</td>
-                        <td>{{Cash}}</td>
-                        <td>{{Card}}</td>
-                        <td>
-                            <span class="close" onclick="confirmx(this, '{{_id}}')" title="delete">&times;</span>
-                        </td>
+                    {{#each dailyInfo}}
+                    <tr>
+                        <td>{{_id}}</td>
+                        <td>{{totalNumFee}}</td>
+                        <td>{{totalInFee}}</td>
+                        <td>{{totalOwemoney}}</td>
+                        <td>{{totalCash}}</td>
+                        <td>{{totalCard}}</td>
                     </tr>
                     {{/each}}
+                    <tr>
+                <td colspan="15" class="total-info">
+                    <b>Total:</b>$<span class="number" id="t_total">{{#Total}}{{total}}{{/Total}}</span>&nbsp;&nbsp;
+                    <b>Total Received:</b>$<span class="number" id="t_received">{{#Total}}{{received}}{{/Total}}</span>&nbsp;&nbsp;
+                    <b>Total Owemoney</b>$<span class="number" id="t_owemoney">{{#Total}}{{owemoney}}{{/Total}}</span>&nbsp;&nbsp;
+                </td>
+            </tr>
                 </tbody>
             </table>
-            <sys:message content="${message}" />
-        </div>
-    </div>
 </body>
 
 </html>

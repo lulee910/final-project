@@ -1,57 +1,78 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-//var session = require('express-session');
-var cookieParser = require('cookie-parser');
 const register = require("../data/register");
-const exphbs = require("express-handlebars");
-
-
 const router = express.Router();
-//app.use(cookieParser());
-/*app.use(session({
-    secret: '12345',
-    cookie: { maxAge: 60000 },
-    resave: false,
-    saveUninitialized: true
-}));*/
 
-// 创建 application/x-www-form-urlencoded 编码解析
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-//var connection = connectMysql.connectMysql();
-//app.use(express.static('note-taking'));
-
+var retMessage = "";
 router.get("/", async (req, res) =>{
-    res.render("sys/main", {flag :true});
+    if (req.session && req.session.name == 'AuthCookie') {
+        res.redirect("/login");
+    }else{
+        res.render("sys/main", {flag :true, message : retMessage, head_script:"head_script"});
+    }
 });
 
-router.post("/login",async (req, res) =>{
-    let loginInfo = req.body;
+router.get("/login",async (req, res) =>{
+    let loginInfo = req.query;
+    if (req.session && req.session.name == 'AuthCookie') {
+        loginInfo.username = req.session.user;
+        loginInfo.passwd = req.session.passwd;
+    }
     const flag = await register.login(loginInfo.username, loginInfo.passwd);
     if(flag !=null){
+        req.session.name = 'AuthCookie';
+        req.session.user = loginInfo.username;
+        req.session.passwd = loginInfo.passwd;
+        loginId = flag._id;
+        loginName = flag.userName;
+        serviceId = flag.serviceId;
+        remarks = flag.remarks;
+        res.redirect("/charge");
+    }else{
+        res.render("sys/main", {flag :true,  error:true, head_script:"head_script"});
+    }
+});
+
+router.get("/charge", async (req, res) =>{
+    if(loginName !=""){
+        let list = null;
+        if(remarks === "administrator"){
+            list = [{name:"User Management",href:"/userInfo"},{name:"Doctor Info",href:"/doctorInfo"}];
+        }else{
+            list = [{name:"Doctor Info",href:"/doctorInfo"}];
+        }
         let menuList = [
             {parent_id:1, child_id:[{name:"Drug Charge",href:"/drugCharge"},{name:"Charge Summary",href:"/chargeSummary"}]},
             {parent_id:2, child_id:[{name:"Daily Business Statement", href:"/dailyBusiness"},{name:"Performance Summary Statement", href:"/performanceSummary"}]},
             {parent_id:3, child_id:[{name:"Drug Info", href:"/drugInfo"}]},
-            {parent_id:4, child_id:[{name:"User Management",href:"/userInfo"},{name:"Doctor Info",href:"/doctorInfo"},{name:"Data Maintenance"}]},
+            {parent_id:4, child_id:list},
         ];
-        loginId = flag._id;
-        loginName = flag.userName;
-        serviceId = flag.serviceId;
-        res.render("sys/sysIndex", {flag : false,  menuList: menuList, head_script:"head_script"}); 
+        res.render("sys/sysIndex", {flag : false, title:"Charge", menuList: menuList, head_script:"head_script"}); 
     }else{
-        res.render("sys/main", {flag :true,  error:true, head_script:"head_script"});
-    }
+        res.redirect("/");
+    }   
 });
 
 router.post("/register",async (req, res) =>{
     var loginInfo = req.body;
     try{
         const flag = await register.register(loginInfo.usernameR, loginInfo.passwd1);
-        res.render("sys/main", {flag :true, message:"Registered successfully", head_script:"head_script"});
+        retMessage = "Registered successfully";
+        res.redirect("/");
     }catch(e){
         res.render("sys/main", {flag :true, message: e, head_script:"head_script", liFlag:2,
         usernameR :loginInfo.usernameR, passwd1: loginInfo.passwd1, passwd2: loginInfo.passwd2});
     }     
  });
+
+ router.get('/logout', async function(req, res) {
+    req.session.destroy();
+    retMessage = "";
+    loginId = "";
+    loginName = "";
+    serviceId = "";
+    remarks = "";
+   res.redirect("/");
+});
 
 module.exports = router;

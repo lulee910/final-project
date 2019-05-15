@@ -1,37 +1,45 @@
 $(function(){
-    $('.navbar').css('position', 'absolute');
-    $('li[name="doctorAdd_tag "]').on('click', function() {
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active');
-            $('li[name="doctorList_tag "]').removeClass('active');
+    $('#startDate').datetimepicker({
+        format: 'MM/DD/YYYY',
+       locale: moment.locale('en-gb')
+    });
+
+    $('#endDate').datetimepicker({
+        format: 'MM/DD/YYYY',
+       locale: moment.locale('en-gb')
+    });
+
+    $("#contentTable").mergeCell({
+        cols:[0,3]
+    });
+
+    if($("#firstDoc")){
+        let select = document.getElementById('firstDoc');  
+        for (let i = 0; i < select.options.length; i++){  
+            if (select.options[i].value == $('#lab_firstDoc').html()){  
+                select.options[i].selected = true;  
+                break;  
+            }  
         }
-    })
-    $('li[name="doctorList_tag "]').on('click', function() {
-        if (!$(this).hasClass('active')) {
-            $(this).addClass('active');
-            $('li[name="doctorAdd_tag "]').removeClass('active');
+     }
+
+     $('form').submit(function () {
+        let startDate = $('#startDate').val();
+        let endDate = $('#endDate').val();
+        
+        if(startDate !="" && endDate==""){
+            $('#endDate').focus();
+            toastr.error("Please input endDate");
+            return false;
         }
-    })
+        if(startDate =="" && endDate !=""){
+            $('#startDate').focus();
+            toastr.error("Please input startDate");
+            return false;
+        }
+        return true;
+     });
+
 })
 
-function confirmx(obj,id){
-    bootbox.confirm({ 
-        size: "small",
-        message: "Are you sure?",
-        callback: function(result){ 
-            if(result){
-                $.post('/hjInfo/delete', {
-                    "_id": id
-                }, function (data) {
-                    if(data > 0){
-                        $(obj).parent().parent().remove();
-                        toastr.success("Delete success");
-                    }else{
-                        toastr.error("Delete failed");
-                    }
-                });
-            } 
-        }
-    })
-}
 

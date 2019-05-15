@@ -6,8 +6,8 @@ const doctorData = require("../data/c_data_doctorInfo");
 const ObjectId = require("mongodb").ObjectID;
 
 
-const hjFeeInfoTpl = {drugsType:"{{row.drugsType}}",drugsName:"{{row.drugsName}}",
-idx:"{{idx}}",drugsSpec:"{{row.drugsSpec}}",price:"{{row.price}}",numPrice:"{{row.numPrice}}",groupId:"{{row.groupId}}",chargesId:"{{row.chargesId}}",
+const hjFeeInfoTpl = {drugType:"{{row.drugType}}",drugName:"{{row.drugName}}",
+idx:"{{idx}}",drugSpec:"{{row.drugSpec}}",drugPrice:"{{row.drugPrice}}",numPrice:"{{row.numPrice}}",chargesId:"{{row.chargesId}}",
 feeId:"{{row.feeId}}",allNum:"{{row.allNum}}",drugsId:"{{row.drugsId}}"
 };
 var doctorInfoList = null;
@@ -17,11 +17,6 @@ router.get("/", async (req, res) =>{
     res.render("charge/drugCharge", {head_script:"head_script", row : hjFeeInfoTpl, doctor: doctorInfoList}); 
 });
 
-
-router.post("/getDrugInfo", async (req, res) =>{
-    let data  = await drugCharge.getDrugInfo();
-    res.json(data);
-});
 
 router.post("/getHjFeeInfo", async (req, res) =>{
     let data  = req.body;
