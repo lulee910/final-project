@@ -17,6 +17,7 @@ configRoutes(app);
 global.loginId = "";
 global.loginName = "";
 global.serviceId = "";
+global.drugId = "";
 
 app.listen(3000, () => {
   console.log("We've now got a server!");

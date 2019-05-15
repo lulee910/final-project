@@ -37,6 +37,7 @@ router.post("/login",async (req, res) =>{
         loginId = flag._id;
         loginName = flag.userName;
         serviceId = flag.serviceId;
+        drugId = flag.drugId;
         res.render("sys/sysIndex", {flag : false,  menuList: menuList, head_script:"head_script"}); 
     }else{
         res.render("sys/main", {flag :true,  error:true, head_script:"head_script"});
