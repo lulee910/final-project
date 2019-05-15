@@ -21,7 +21,7 @@
             <div class="panel-heading">
                 <strong><span>Basic Information</span></strong>
             </div>
-            <table class="table table-bordered table-condensed" style="margin-bottom: 0px;">
+            <table class="table table-bordered table-condensed table-bottom">
                 <tbody>
                     <tr>
                         <td class="key"><label for="firstDoc">Doctor</label></td>
@@ -36,7 +36,7 @@
                             </div>
 
                         </td>
-                        <td class="key"><label for="name">Patient</label> <span style="color:red">*</span></td>
+                        <td class="key"><label for="name">Patient</label> <span class="red-color">*</span></td>
                         <td>
                             <div><input type="text" class="form-control " id="name" name="hjInfoList[name]" value="{{hjInfoList.name}}"></div>
                         </td>
@@ -48,14 +48,14 @@
                     </tr>
                     <tr>
                         {{!#if hjInfo.feeType 1}}
-                        <td class="key"><label for="tel">Contact Number</label> <span style="color:red">*</span></td>
+                        <td class="key"><label for="tel">Contact Number</label> <span class="red-color">*</span></td>
                         <td>
                             <div><input type="tel" class="form-control" id="tel" name="hjInfoList[tel]" maxlength="10"
                             onkeyup="this.value=this.value.replace(/\D/g,'')" value="{{hjInfoList.tel}}">
                         </td>
         </div>
         {{!/if}}
-        <td class="key"><label for="feeDate">Charge Date</label> <span style="color:red">*</span></td>
+        <td class="key"><label for="feeDate">Charge Date</label> <span class="red-color">*</span></td>
         <td>
             <div class='input-group date'>
                 <input type='text' class="form-control" id='feeDate' name="hjInfoList[feeDate]" value="{{hjInfoList.feeDate}}" />
@@ -132,8 +132,8 @@
                 </table>
 
                 <div class="complexContent"></div>
-                <div style="height: 20px; margin-top: 20px;">
-                    <div style="float: right; margin-top: -10px; margin-right: 20px;">
+                <div class="div-top">
+                    <div class="div-submit">
                         <input type="button" id="btnSubmit" value="Submit" class="btn btn-primary" />
                     </div>
                 </div>
@@ -173,7 +173,7 @@
 							</td>
 							<td>
 								<input id="hjFeeInfoList{{row.idx}}_groupId" name="hjFeeInfoList[{{row.idx}}][groupId]" 
-								type="text" value="{{row.groupId}}" maxlength="2" style="width:20px;" onblur="javascript:changeGroup({{row.idx}});" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+								type="text" value="{{row.groupId}}" maxlength="2"  onblur="javascript:changeGroup({{row.idx}});" onkeyup="value=value.replace(/[^\d]/g,'')"/>
 							</td>
                             <td class="text-center" width="10">
 								<span class="close" onclick="delRow(this, '{{row.chargesId}}','{{row.feeId}}','{{row.allNum}}','{{row.drugsId}}')" title="delete">&times;</span>

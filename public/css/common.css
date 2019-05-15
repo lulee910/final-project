@@ -30,3 +30,55 @@ td.key{
     width: 20px; 
     float: left;
 }
+
+.red-color{
+    color:rgb(255, 60, 0);
+}
+
+.remember-me{
+    display:inline-block;
+    margin-left:5%;
+}
+
+.login-btn{
+    width:92%;
+    margin-left:4%
+}
+
+.login-div{
+    position: absolute; 
+    top: 25%;
+    left: 50%; 
+    height: 300px;  
+    margin-top: -100px; 
+    width: 450px;  
+    margin-left: -200px; 
+}
+
+iframe{
+    overflow:visible;
+}
+
+.top{
+    top:0%;
+}
+
+.total-info{
+    text-align: right;
+    width: 8%;
+}
+
+.table-bottom{
+    margin-bottom: 0px;
+}
+
+.div-submit{
+    float: right; 
+    margin-top: -10px; 
+    margin-right: 20px;
+}
+
+.div-top{
+    height: 20px; 
+    margin-top: 20px;
+}
