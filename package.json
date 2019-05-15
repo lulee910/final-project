@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "web_study_group_final_project",
+=======
+  "name": "final_project",
+>>>>>>> 14b82b48025379992adb46be1847bc0079465eef
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -7,13 +11,14 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Web Study Group",
+  "author": "Lu Li",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
+    "express-session": "^1.16.1",
     "mongodb": "^3.2.2"
   }
 }

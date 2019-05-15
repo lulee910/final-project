@@ -18,11 +18,11 @@ module.exports = {
             totalCash : { "$sum" : { "$cond" : [ { "$eq" : [ "$methodType" , "1"]} , "$inFee" , 0]}},
             totalCard : { "$sum" : { "$cond" : [ { "$ne" : [ "$methodType" , "1"]} , "$inFee" , 0]}},
             totalNumFee:{ $sum:"$numFee"},
-            totalInFee:{ $sum:"$inFee"},
+            totalInFee:{ $sum:{ $subtract : ["$inFee","$changeFee"]}},
             totalOwemoney:{ $sum:"$owemoney"}}}
             ]).sort({_id:1}).toArray();
         let total = await _connect.aggregate([{$match:find},{$group:{_id:null, total:{ $sum:"$numFee"},
         received:{ $sum:"$inFee"},owemoney:{ $sum:"$owemoney"}}}]).toArray();
-        return {dataList : data,  Total :total};
+        return {dataList : data, Total :total};
     }
 }

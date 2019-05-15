@@ -4,47 +4,6 @@ const hjFeeInfo = mongoCollections.hjFeeInfo;
 const ObjectId = require("mongodb").ObjectID;
 
 module.exports = {
-    async getDrugInfo() {
-        let data = [
-            {
-                "drugId": 1,
-                "drugName": "布袋",
-                "barCode": "11223344",
-                "drugType": "1",
-                "drugSpec": "个",
-                "drugUnint": "个",
-                "drugPrice": "12"
-            },
-            {
-                "drugId": 2,
-                "drugName": "布袋",
-                "barCode": "11223344",
-                "drugType": "1",
-                "drugSpec": "个",
-                "drugUnint": "个",
-                "drugPrice": "12"
-            },
-            {
-                "drugId": 3,
-                "drugName": "布袋",
-                "barCode": "11223344",
-                "drugType": "1",
-                "drugSpec": "个",
-                "drugUnint": "个",
-                "drugPrice": "12"
-            },
-            {
-                "drugId": 4,
-                "drugName": "布袋",
-                "barCode": "11223344",
-                "drugType": "1",
-                "drugSpec": "个",
-                "drugUnint": "个",
-                "drugPrice": "12"
-            }
-        ]
-        return data;
-    },
 
     async findhjInfoById(id) {
         const con_hjInfo = await hjInfo();
@@ -76,8 +35,9 @@ module.exports = {
                 for (let i = 0; i < chargeFeeInfoList.length; i++) {
                     chargeFeeInfo = chargeFeeInfoList[i];
                     chargeFeeInfo["chargesId"] = ObjectId(id);
+                    chargeFeeInfo["drugsId"] = ObjectId(chargeFeeInfo["drugsId"]);
                     chargeFeeInfo["allNum"] = parseInt(chargeFeeInfo["allNum"]);
-                    chargeFeeInfo["price1"] = parseFloat(chargeFeeInfo["price1"]);
+                    chargeFeeInfo["drugPrice"] = parseFloat(chargeFeeInfo["drugPrice"]);
                     chargeFeeInfo["numPrice"] = parseFloat(chargeFeeInfo["numPrice"]);
                     await con_hjFeeInfo.insertOne(chargeFeeInfo);
                 }
@@ -98,9 +58,42 @@ module.exports = {
         }
         findInfo["serviceId"] = serviceId;
         const con_hjInfo = await hjInfo();
-        let data = await con_hjInfo.find(findInfo).sort({feeDate : -1}).toArray();
+       
+        let data = await con_hjInfo.aggregate([
+            {$match:findInfo},
+            {$project:{
+                firstDoc : 1,
+                name : 1,
+                sex : 1,
+                tel : 1,
+                feeDate : 1,
+                numFee : 1,
+                methodType : {"$cond" : {
+                    if : {"$eq" : [ "$methodType" , "1"]},
+                    then : "Cash",
+                    else :{
+                        "$cond" : {
+                            if : {"$eq" : [ "$methodType" , "2"]},
+                            then : "Debit",
+                            else: {
+                                "$cond" : {
+                                    if : {"$eq" : [ "$methodType" , "3"]},
+                                    then : "Credit",
+                                    else : ""
+                                }
+                            }
+                        }
+                    }
+                }},
+                inFee : 1,
+                changeFee : 1,
+                owemoney : 1,
+                feeName : 1
+            }}
+        ]).sort({feeDate : -1}).toArray();
         let total = await con_hjInfo.aggregate([{$match:findInfo},{$group:{_id:null, total:{ $sum:"$numFee"},
-        received:{ $sum:"$inFee"},owemoney:{ $sum:"$owemoney"}}}]).toArray();
+        received:{ $sum:"$inFee"},changeFee:{$sum:"$changeFee"}, owemoney:{ $sum:"$owemoney"}}}]).toArray();
+        total[0]["received"] = total[0]["received"] - total[0]["changeFee"];
         let dataCount = data.length;
         data = data.slice(dex,dex+30);
         return {dataList : data, pageSize : dataCount, Total :total};
@@ -108,7 +101,47 @@ module.exports = {
 
     async findhjFeeInfo(hjFeeInfoList) {
         const con_hjFeeInfo = await hjFeeInfo();
-        const data = await con_hjFeeInfo.find(hjFeeInfoList).toArray();
+        let data = await con_hjFeeInfo.aggregate([
+            {
+              $lookup:
+                {
+                  from: "drugInfo",
+                  localField: "drugsId",
+                  foreignField: "_id",
+                  as: "drugData"
+                }
+          },
+          { $match : hjFeeInfoList },
+          { "$unwind": "$drugData" },
+          {$project:{
+            chargesId : 1,
+            drugsId : 1,
+            allNum: 1,
+            drugPrice : 1,
+            numPrice : 1,
+            groupId : 1,
+            drugName : "$drugData.drugName",
+            drugType : {"$cond" : [ { "$eq" : [ "$drugData.drugType" , "1"]} , "Prescription" , "non-Prescription"]},
+            drugSpec : "$drugData.drugSpec",
+            drugUnit : {"$cond" : {
+                if : {"$eq" : [ "$drugData.drugUnit" , "1"]},
+                then : "box",
+                else :{
+                    "$cond" : {
+                        if : {"$eq" : [ "$drugData.drugUnit" , "2"]},
+                        then : "bottle",
+                        else: {
+                            "$cond" : {
+                                if : {"$eq" : [ "$drugData.drugUnit" , "3"]},
+                                then : "bag",
+                                else : ""
+                            }
+                        }
+                    }
+                }
+            }}
+          }}
+       ]).toArray();
         return data;
     },
 

@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     {{> head_script}}
@@ -11,10 +11,16 @@
     <script src="/public/js/register.js"></script>
 </head>
 
-<body>
+<body class="login-image">
     <main>
+    <div class="header"></div>
+    <header>
+        <h1 class="form-signin-heading">Management System of Pharmacy Store</h1>
+    </header>
+    
         {{{body}}}
     </main>
+    <script src="tota11y.min.js"></script>
 </body>
 </html>
 {{else}}

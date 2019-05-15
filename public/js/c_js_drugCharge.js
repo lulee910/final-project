@@ -132,8 +132,13 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
     matchContains: true,    
     autoFill: false,    
     dataType : "json",
+    extraParams: {   
+         drugsName: function () {
+              var name = $.trim($("#drugName").val());
+             return name;
+         }
+     },
     parse: function(data){
-        console.log(data);
         var rows = [];
         var d = data;
         for(var i=0; i<d.length; i++){
@@ -146,21 +151,20 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         return rows;
     },
     formatItem: function(item) {
-        return "<div><p><font>" + item.id + '--(' + item.drugsName + ')--(规格：' + item.drugsSpec + "</font></p></span><p>&nbsp&nbsp;售价：<font color=#CD4F39>" + item.price + "</font>&nbsp&nbsp;类型：<font color=#CD4F39>" 
-        + item.drugsType + "</font></p></div>";
+        return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
     }
 }).result(function(event, data, formatted) {
     $("#drugName").val('');
     var hjFeeInfoRowIdx = 0;
     data["allNum"] = "1";
-    data["groupId"] = "1";
+    data["drugsId"] = data["_id"];
     var num = document.getElementById("hjFeeInfoList").rows.length;
     var text = '';
     if(num>0){
         text = document.getElementById("hjFeeInfoList").rows[num-1].cells[0].innerHTML;
         hjFeeInfoRowIdx = parseInt(text) + 1;
     }
-    data["numPrice"] = data["allNum"] * data["price"];
+    data["numPrice"] = data["allNum"] * data["drugPrice"];
     addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data);
     $('#Flag').val(1);
     numFee();
@@ -178,8 +182,13 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         matchContains: true,
         autoFill: false,    
         dataType : "json",
+        extraParams: {   
+            drugsName: function () {
+                 var name = $.trim($("#drugName2").val());
+                return name;
+            }
+        },
         parse: function(data){
-            console.log(data);
             var rows = [];
             var d = data;
             for(var i=0; i<d.length; i++){
@@ -192,21 +201,20 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
             return rows;
         },
         formatItem: function(item) {
-            return "<div><p><font>" + item.id + '--(' + item.drugsName + ')--(规格：' + item.drugsSpec + "</font></p></span><p>&nbsp&nbsp;售价：<font color=#CD4F39>" + item.price + "</font>&nbsp&nbsp;类型：<font color=#CD4F39>" 
-            + item.drugsType + "</font></p></div>";
+            return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
         }
     }).result(function(event, data, formatted) {
         $("#drugName").val('');
         var hjFeeInfoRowIdx = 0;
         data["allNum"] = "1";
-        data["groupId"] = "1";
+        data["drugsId"] = data["_id"];
         var num = document.getElementById("hjFeeInfoList").rows.length;
         var text = '';
         if(num>0){
             text = document.getElementById("hjFeeInfoList").rows[num-1].cells[0].innerHTML;
             hjFeeInfoRowIdx = parseInt(text) + 1;
         }
-        data["numPrice"] = data["allNum"] * data["price"];
+        data["numPrice"] = data["allNum"] * data["drugPrice"];
         addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data);
         $('#Flag').val(1);
         numFee();
@@ -218,7 +226,7 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
             "id": data
         }, function (data) {
             for (var i = 0; i < data.length; i++) {
-                data[i]["allPrice"] = data[i]["drugsPrice"] * data[i]["allNum"];
+                data[i]["allPrice"] = data[i]["drugPrice"] * data[i]["allNum"];
                 addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data[i]);
                 hjFeeInfoRowIdx = hjFeeInfoRowIdx + 1;
             }
@@ -230,6 +238,16 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         let select = document.getElementById('firstDoc');  
         for (let i = 0; i < select.options.length; i++){  
             if (select.options[i].value == $('#lab_firstDoc').html()){  
+                select.options[i].selected = true;  
+                break;  
+            }  
+        }
+     }
+
+     if($("#sex")){
+        let select = document.getElementById('sex');  
+        for (let i = 0; i < select.options.length; i++){  
+            if (select.options[i].val() == $('#lab_sex').html()){  
                 select.options[i].selected = true;  
                 break;  
             }  
@@ -260,63 +278,19 @@ function claim(idx) {
     numFee();
 
 }
-function changeGroup(idx) {
-    var len = document.getElementById("hjFeeInfoList").rows.length;
-    var l1 = $("#hjFeeInfoList" + idx + "_groupId").val();
-    for (var i = idx; i < len; i++) {
-        $("#hjFeeInfoList" + i + "_groupId").val(l1);
-    }
-}
-
 
 function inFeeChange() {
     var inFee = parseFloat($("#inFee").val()).toFixed(2);
     var total = $("#numFee").val();
     var changeFee = inFee - total;
     if (changeFee > 0) {
-        $("#changeFee").val(changeFee.toFixed(2));//找零金额
+        $("#changeFee").val(changeFee.toFixed(2));
         $("#owemoney").val("0.00");
     } else {
         var owemoney = total - inFee;
-        $("#owemoney").val(owemoney.toFixed(2));//欠费金额
+        $("#owemoney").val(owemoney.toFixed(2));
         $("#changeFee").val("0.00");
     }
 }
-
-//回车键提交
-$(document).keypress(function (event) {
-    var keycode = event.which;
-    if (keycode == 13) {
-        var o = document.getElementById("myModal").style.display;
-        if (o == 'block') {
-            document.getElementById("btnSubmit1").click();
-        }
-        var vId = event.srcElement.id;
-        var vValue = vId.substring(vId.indexOf('t') + 1, vId.indexOf('_'));
-        var vText = vId.substring(vId.indexOf('_') + 1);
-
-        if (vText == "times") {
-            if ($('#feeType').val() == 3) {
-                $("#hjFeeInfoList" + vValue + "_price").focus();
-            } else {
-                $("#hjFeeInfoList" + vValue + "_umber").focus();
-            }
-        }
-        if (vText == "umber") {
-            $("#hjFeeInfoList" + vValue + "_price").focus();
-        }
-
-        if (vText == "price") {
-            if ($('#Flag').val() == 1) {
-                $("#drugName").focus();
-            } else {
-                $("#drugName2").focus();
-            }
-        }
-    }
-    if (keycode == 32) {
-        document.getElementById("btnSubmit").click();
-    }
-});
 
 

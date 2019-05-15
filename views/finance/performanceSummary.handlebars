@@ -15,21 +15,21 @@
             <strong><span>Search Information</span></strong>
         </div>
         <div class="panel-body">
-    <form id="searchForm" modelAttribute="performanceSummary" action="/performanceSummary/query" method="post"
+    <form id="searchForm"  action="/performanceSummary/query" method="post"
         class="form-horizontal">
         <div class="form-group">
             <label for="firstDoc" class="col-sm-1 control-label">Doctor</label>
             <div class="col-sm-2">
                 <label id="lab_firstDoc" class="hidden">{{queryList.firstDoc}}</label>
                         <select class="form-control" id="firstDoc" name="findInfo[firstDoc]">
-                            <option value="" label="All" />
+                            <option value="" label="All" ></option>
                             {{#doctor}}
                             <option>{{firstName}} {{lastName}}</option>
                             {{/doctor}}
                         </select>
             </div>
         
-            <label for="feeDate" class="col-sm-2 control-label">Charge Date</label>
+            <label for="startDate" class="col-sm-2 control-label">Charge Date</label>
             <div class="col-sm-2">
                 <div class='input-group date'>
                     <input type='text' class="form-control" id='startDate' name="findInfo[startDate]"
@@ -54,7 +54,7 @@
     </form>
     </div>
     </div>
-    </br>
+    <br>
     <table id="contentTable" class="table table-striped table-bordered table-condensed">
         <thead>
             <tr>

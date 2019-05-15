@@ -19,7 +19,7 @@
         <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="userList">
             <div class="panel panel-default ">
             <div class="panel-heading">
-                <strong><span>Query Information</span></strong>
+                <strong><span>Search Information</span></strong>
             </div>
             <div class="panel-body">
 
@@ -28,9 +28,9 @@
                 <div class="form-group">
                     <label for="loginName" class="col-sm-2 control-label">User Name</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control " id="loginName" name="userName">
+                        <input type="text" class="form-control " id="loginName" name="userName" value="{{searchName}}">
                     </div>
-                    <input id="btnQuery" class="btn btn-primary" type="submit" value="Query" />
+                    <input id="btnQuery" class="btn btn-primary" type="submit" value="Search" />
                 </div>
             </form>
             </div>
@@ -46,7 +46,7 @@
                     <tr>
                         <th>User Name</th>
                         <th>Remarks</th>
-                        <th width="10">&nbsp;</th>
+                        <th class="th-10">&nbsp;</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
 
         </div>
         <div class="tab-pane fade {{#if flag2}}in active{{/if}}" id="userAdd">
-            <br/>
+            <br>
             <form id="inputForm"  action="/userInfo/save" method="post"
                 class="form-horizontal">
                 <div class="control-group">
@@ -80,9 +80,9 @@
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control " id="userName" name="userInfo[userName]"
-                                value="{{#userInfo}}{{userName}}{{/userInfo}}" required />
+                                value="{{#updateInfo}}{{userName}}{{/updateInfo}}" {{#if read}}readonly="readonly"{{/if}} required />
                             <input type="text" class="hidden " name="userInfo[_id]"
-                            value="{{#userInfo}}{{_id}}{{/userInfo}}" />
+                            value="{{#updateInfo}}{{_id}}{{/updateInfo}}" />
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="tip" id="passwd2Tip"></div>
-             </br>
+             <br>
             <div class="form-actions">
                 <input id="btnSubmit" class="btn btn-primary" type="submit" value="submit" />&nbsp;
             </div>

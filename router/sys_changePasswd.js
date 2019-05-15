@@ -11,12 +11,12 @@ router.get("/", async (req, res) =>{
 
 router.post("/change", async (req, res) =>{
     let data = req.body;
-    let ret = await login.login(loginName,data.passswd);
+    let ret = await login.login(loginName,data.passwd);
     let mes = "";
     if(ret == null){
         mes = "The original password you entered is incorrect";
     }else{
-        await sysUser.changePasswd(data.passswd1);
+        await sysUser.changePasswd(data.passwd1);
         mes = "Password changed successfully";
     }
     res.render("sys/changePasswd", {head_script:"head_script", message:mes}); 

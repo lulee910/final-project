@@ -33,16 +33,8 @@ module.exports = {
 
     async findByNT(data){
         const drugInfos = await drugInfo();
-        let findInfo = {};
-        let keys = Object.keys(data);
-        for (let i = 0; i < keys.length; i++) {
-            if (data[keys[i]] != "") {
-                findInfo[keys[i]] = data[keys[i]];
-            }
-        }
-        findInfo["serviceId"] = serviceId;
         let drugs = await drugInfos.aggregate([
-            {$match : findInfo},
+            {$match : {serviceId : serviceId, drugName : new RegExp(data["drugName"]), drugType:new RegExp(data["drugType"])}},
             {$project:{
                 drugName : 1,
                 drugType : {"$cond" : [ { "$eq" : [ "$drugType" , "1"]} , "Prescription" , "non-Prescription"]},

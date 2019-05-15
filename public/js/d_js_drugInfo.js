@@ -48,6 +48,41 @@ $(function(){
         }
      }
 
+     $("#btnExport").click(function(){
+        bootbox.confirm({ 
+            size: "small",
+            message: "Are you sure you want to export the data?",
+            callback: function(result){ 
+                if(result){
+                    $.post('/chargeSummary/delete', {
+                        "_id": id
+                    }, function (data) {
+                        if(data !=null){
+                            toastr.success("Delete success");
+                        }else{
+                            toastr.error("Delete failed");
+                        }
+                    });
+                } 
+            }
+        })
+    });
+    $("#btnImport").click(function(){
+        $.jBox($("#importBox").html(), {title:"导入数据", buttons:{"关闭":true}, 
+            bottomText:"导入文件不能超过5M，仅允许导入“xls”或“xlsx”格式文件！"});
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 })
 
 function confirmx(obj,id){

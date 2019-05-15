@@ -1,9 +1,8 @@
-<html>
+<html lang="en">
 
 <head>
     <title>Drug Charge</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta http-equiv="Cache-Control" content="no-store">
     {{> head_script}}
     <script src="/public/js/c_js_drugCharge.js"></script>
     <script src="/public/autocomplete/jquery.autocomplete.js"></script>
@@ -13,7 +12,7 @@
 </head>
 
 <body>
-    <form id="inputForm" modelAttribute="hjInfo" action="/drugCharge/save" method="post" class="form-horizontal">
+    <form id="inputForm"  action="/drugCharge/save" method="post" class="form-horizontal">
         <label id="message" class="hidden">{{message}}</label>
         <input id="Flag" type="hidden" name="Flag" value="{{Flag}}"/>
         <input id="hjId" type="hidden" name="hjInfoList[_id]" value="{{hjInfoList._id}}"/>
@@ -41,20 +40,18 @@
                             <div><input type="text" class="form-control " id="name" name="hjInfoList[name]" value="{{hjInfoList.name}}"></div>
                         </td>
                         <td class="key"><label for="sex">Gender</label></td>
-                        <td> <select class="form-control" id="sex" name="hjInfoList[sex]" value="{{hjInfoList.sex}}">
+                        <td> <label id="lab_sex" class="hidden">{{hjInfoList.sex}}</label>
+                            <select class="form-control" id="sex" name="hjInfoList[sex]">
                                 <option>Male</option>
                                 <option>Female</option>
                             </select></td>
                     </tr>
                     <tr>
-                        {{!#if hjInfo.feeType 1}}
                         <td class="key"><label for="tel">Contact Number</label> <span class="red-color">*</span></td>
                         <td>
                             <div><input type="tel" class="form-control" id="tel" name="hjInfoList[tel]" maxlength="10"
-                            onkeyup="this.value=this.value.replace(/\D/g,'')" value="{{hjInfoList.tel}}">
+                            onkeyup="this.value=this.value.replace(/\D/g,'')" value="{{hjInfoList.tel}}"></div>
                         </td>
-        </div>
-        {{!/if}}
         <td class="key"><label for="feeDate">Charge Date</label> <span class="red-color">*</span></td>
         <td>
             <div class='input-group date'>
@@ -66,48 +63,17 @@
         </td>
         <td class="key"><label>Total</label></td>
         <td>$<span class="number total" id="numFee2">0.00</span></td>
-        {{!--#if hjInfo.feeType 3}}
-								<td class="key"><label>收费总额：</label> <form:hidden
-										path="name" value="零售" /></td>
-								<c:if test="${empty hjInfo.numFee}">
-									<td><span class="number total" id="numFee2">0.00</span>元</td>
-								</c:if>
-								<c:if test="${not empty hjInfo.numFee}">
-									<c:if test="${not empty hjInfo.oldChargesId }">
-										<td><span class="number total" id="numFee2">${hjInfo.owemoney - hjInfo.patchFee}</span>元</td>
-									</c:if>
-									<c:if test="${empty hjInfo.oldChargesId }">
-										<td><span class="number total" id="numFee2">${hjInfo.numFee}</span>元</td>
-									</c:if>
-								</c:if>
-							{{/if--}}
         </tr>
         <tr>
-            {{!#if hjInfo.feeType 1 2}}
-
-            {{!--<c:if test="${not empty hjInfo.numFee}">}}
-									<c:if test="${not empty hjInfo.oldChargesId }">
-										<td><span class="number total" id="numFee2">${hjInfo.owemoney - hjInfo.patchFee}</span>元</td>
-									</c:if>
-									<c:if test="${empty hjInfo.oldChargesId }">
-										<td><span class="number total" id="numFee2">${hjInfo.numFee}</span>元</td>
-									</c:if>
-								{{</c:if>--}}
-
-            {{!/if}}
             <td class="key"><label for="drugName">Drug Name</label></td>
-            <td><input type="text" class="form-control" id="drugName">
-                <input id="enter" type="hidden" value="0" /></td>
+            <td><input type="text" class="form-control" id="drugName"></td>
             <td class="key"><label for="drugName2">Bar Code</label></td>
-            <td><input type="text" class="form-control" id="drugName2">
-                <input id="enter" type="hidden" value="0" /></td>
+            <td><input type="text" class="form-control" id="drugName2"></td>
         </tr>
         </tbody>
         </table>
         </div>
-        </div>
         <br />
-
         <div class="panel panel-default ">
             <div class="panel-heading">
                 <strong><span>Charge Information</span></strong>
@@ -123,8 +89,7 @@
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Total</th>
-                            <th>Group ID</th>
-                            <th width="10">&nbsp;</th>
+                            <th class="th-10">&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody id="hjFeeInfoList">
@@ -151,31 +116,27 @@
 								<input id="hjFeeInfoList{{row.idx}}_delFlag" name="hjFeeInfoList[{{row.idx}}][delFlag]" type="hidden" value="0"/>
 							</td>
 							<td>
-                                {{row.drugsName}}
+                                {{row.drugName}}
 							</td>
 							<td>
-								{{row.drugsType}}
+								{{row.drugType}}
 							</td>
 							<td>
-								{{row.drugsSpec}}
+								{{row.drugSpec}}
 							</td>
 							<td>					
 								<div><input id="hjFeeInfoList{{row.idx}}_allNum" name="hjFeeInfoList[{{row.idx}}][allNum]" class="form-control" type="number" value="1" onblur="javascript:claim({{row.idx}})"/></div>
 							</td>
 							<td>
-                                <label id="hjFeeInfoList{{row.idx}}_price">{{row.price}}</label>
-								<input id="hjFeeInfoList{{row.idx}}_price1"  name="hjFeeInfoList[{{row.idx}}][price]" type="hidden" value="{{row.price}}"/>
+                                <label id="hjFeeInfoList{{row.idx}}_price">{{row.drugPrice}}</label>
+								<input id="hjFeeInfoList{{row.idx}}_price1"  name="hjFeeInfoList[{{row.idx}}][drugPrice]" type="hidden" value="{{row.drugPrice}}"/>
 								
 							</td>
 							<td>
 								<label id="hjFeeInfoList{{row.idx}}_numPrice">{{row.numPrice}}</label>
 								<input id="hjFeeInfoList{{row.idx}}_numPrice1"  name="hjFeeInfoList[{{row.idx}}][numPrice]" type="hidden" value={{row.numPrice}}/>
 							</td>
-							<td>
-								<input id="hjFeeInfoList{{row.idx}}_groupId" name="hjFeeInfoList[{{row.idx}}][groupId]" 
-								type="text" value="{{row.groupId}}" maxlength="2"  onblur="javascript:changeGroup({{row.idx}});" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-							</td>
-                            <td class="text-center" width="10">
+                            <td class="text-center" >
 								<span class="close" onclick="delRow(this, '{{row.chargesId}}','{{row.feeId}}','{{row.allNum}}','{{row.drugsId}}')" title="delete">&times;</span>
 							</td>
 						</tr>
@@ -189,7 +150,6 @@
                         <h4 class="modal-title" id="myModalLabel">Charge Information</h4>
                     </div>
                     <div class="modal-body">
-                        <form>
                             <div class="control-group">
                                 <div class="row">
                                     <div class="col-md-2 col-md-offset-3">
@@ -212,9 +172,9 @@
                                     </div>
                                     <div class="col-md-4">
                                         <select class="form-control" id="methodType" name="hjInfoList[methodType]">
-                                            <option value="1" label="Cash" />
-                                            <option value="2" label="Debit" />
-                                            <option value="3" label="Credit" />
+                                            <option value="1" label="Cash"></option>
+                                            <option value="2" label="Debit"></option>
+                                            <option value="3" label="Credit"></option>
                                         </select>
                                     </div>
                                 </div>

@@ -14,7 +14,7 @@ router.get("/update/:id", async (req, res) =>{
 });
 
 router.get("/query", async (req, res) =>{
-    let drugData = req.body;
+    let drugData = req.query.drugInfo;
     let drugs = await drug.findByNT(drugData);
     res.render("drug/drugInfo", {head_script:"head_script", drugInfo : drugs, flag1 : true, queryList : drugData}); 
 });
