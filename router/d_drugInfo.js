@@ -2,6 +2,9 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
 const drug = require("../data/d_data_drugInfo");
+const fs=require("fs");
+const nodeExcel = require('excel-export');
+const xlsx = require('node-xlsx');
 
 router.get("/", async (req, res) =>{
     res.render("drug/drugInfo", {head_script:"head_script", flag1 : true}); 

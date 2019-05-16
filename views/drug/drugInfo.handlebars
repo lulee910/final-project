@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <div id="importBox" class="hide">
+    <div id="importBox" class="hidden">
 		<form id="importForm" action="${ctx}/drugstock/drugsInfo/import" method="post"
 			enctype="multipart/form-data" class="form-search"
 			style="padding-left: 20px; text-align: center;"
 			onsubmit="loading('正在导入，请稍等...');">
 			<br /> <input id="uploadFile" name="file" type="file"
 				style="width: 330px" /><br />
-			<br /> <font style="color: red;">请确认相应的数据已经维护，供应商与药品名称唯一</font>
+			<br /> <font style="color: red;">请确认相应的数据已经维护，供应商与药品名称唯一</font><br /> 
 			<input id="btnImportSubmit" class="btn btn-primary"
 				type="submit" value="   导    入   " /> <a
 				href="${ctx}/drugstock/drugsInfo/import/template">下载模板</a>

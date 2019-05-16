@@ -12,9 +12,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "cookie-parser": "^1.4.4",
+    "excel-export": "^0.5.1",
     "express": "^4.16.4",
     "express-handlebars": "^3.0.2",
     "express-session": "^1.16.1",
-    "mongodb": "^3.2.2"
+    "mongodb": "^3.2.2",
+    "node-xlsx": "^0.15.0"
   }
 }

@@ -4,20 +4,8 @@ function delRow(obj, chargesId, feeId, allNum, drugesId) {
         message: "Are you sure?",
         callback: function(result){ 
             if(result){
-                if (feeId == ''){
-                    $(obj).parent().parent().remove();
-                    numFee();
-                }else{
-                    $.post('/drugInfo/deleteFeeId', {
-                        "chargesId": chargesId,
-                        "feeId": feeId,
-                        "allNum": allNum,
-                        "drugesId": drugesId
-                    }, function (data) {
-                        $(obj).parent().parent().remove();
-                        numFee();
-                    });
-                }             
+                $(obj).parent().parent().remove();
+                numFee();          
             } 
         }
     })
@@ -86,6 +74,7 @@ $(function () {
             return false;
         }
         var num = document.getElementById("hjFeeInfoList").rows.length;
+        if(num == 0)  return false;
         var text = '';
         for (var v = 0; v < num; v++) {
             text = document.getElementById("hjFeeInfoList").rows[num-1].cells[v].innerHTML;
@@ -124,9 +113,8 @@ $(function () {
         $(this).trigger('keydown.autocomplete');
     });
    
-$('#drugName').autocomplete("/drugInfo/getDrugInfo", {
-    max: 5,   
-    minChars: 1,
+$('#drugName').autocomplete("/drugInfo/getDrugInfo", {  
+  
     width: $("#drugName").width() + 30,     
     scrollHeight: 300,   
     matchContains: true,    
@@ -151,7 +139,9 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         return rows;
     },
     formatItem: function(item) {
-        return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+        if(typeof item.drugName !="undefined"){
+            return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+        }
     }
 }).result(function(event, data, formatted) {
     $("#drugName").val('');
@@ -174,9 +164,7 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
         $(this).trigger('keydown.autocomplete');
     });
 
-    $("#drugName2").autocomplete("/drugInfo/getDrugInfo", {
-        max: 5,   
-        minChars: 1,    
+    $("#drugName2").autocomplete("/drugInfo/getDrugInfo", {   
         width: $("#drugName2").width() + 30,    
         scrollHeight: 300,   
         matchContains: true,
@@ -201,7 +189,9 @@ $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
             return rows;
         },
         formatItem: function(item) {
-            return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+            if(typeof item.drugName !="undefined"){
+                return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType  + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+            }
         }
     }).result(function(event, data, formatted) {
         $("#drugName").val('');

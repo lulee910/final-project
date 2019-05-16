@@ -52,6 +52,7 @@ module.exports = {
                     }
                 },
                 { "$unwind": "$list" },
+                { "$unwind": "$list._id.drugType" },
                 {
                     $project : {
                         firstDoc : "$_id",
