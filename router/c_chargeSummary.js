@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const router = express.Router();
 const drugCharge = require("../data/c_data_drugCharge");
 const doctorData = require("../data/c_data_doctorInfo");
