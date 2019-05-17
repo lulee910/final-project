@@ -19,7 +19,7 @@ module.exports = {
             {$match : {serviceId : serviceId}},
             {$project:{
                 drugName : 1,
-                drugType : {"$cond" : [ { "$eq" : [ "$drugType" , "1"]} , "Prescription" , "non-Prescription"]},
+                drugType : {"$cond" : [ { "$eq" : [ "$drugType" , "1"]} , "Prescription" , "Non-Prescription"]},
                 barCode : 1,
                 drugSpec : 1,
                 drugUnit : 1,
