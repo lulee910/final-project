@@ -1,27 +1,27 @@
   $(function(){
       toastr.options = {
   
-        "closeButton": false, //是否显示关闭按钮
+        "closeButton": false, 
         
-        "debug": false, //是否使用debug模式
+        "debug": false, 
        
-       "positionClass": "toast-bottom-center",//弹出窗的位置
+       "positionClass": "toast-bottom-center",
        
-       "showDuration": "300",//显示的动画时间
+       "showDuration": "300",
        
-       "hideDuration": "600",//消失的动画时间
+       "hideDuration": "1000",
        
-       "timeOut": "1500", //展现时间
+       "timeOut": "1500", 
        
-       "extendedTimeOut": "500",//加长展示时间
+       "extendedTimeOut": "500",
        
-       "showEasing": "swing",//显示时的动画缓冲方式
+       "showEasing": "swing",
        
-       "hideEasing": "linear",//消失时的动画缓冲方式
+       "hideEasing": "linear",
        
-       "showMethod": "fadeIn",//显示时的动画方式
+       "showMethod": "fadeIn",
        
-       "hideMethod": "fadeOut" //消失时的动画方式
+       "hideMethod": "fadeOut"
        
        };
   })

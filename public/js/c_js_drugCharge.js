@@ -77,10 +77,16 @@ $(function () {
         if(num == 0)  return false;
         var text = '';
         for (var v = 0; v < num; v++) {
-            text = document.getElementById("hjFeeInfoList").rows[num-1].cells[v].innerHTML;
+            text = document.getElementById("hjFeeInfoList").rows[v].cells[0].innerHTML;
             if ($("#hjFeeInfoList" + parseInt(text) + "_allNum").val() == '') {
                 $("#hjFeeInfoList" + parseInt(text) + "_allNum").parent().addClass("has-error");
                 $("#hjFeeInfoList" + parseInt(text) + "_allNum").focus();
+                return false;
+            }
+            if ($("#hjFeeInfoList" + parseInt(text) + "_drugType").html().trim() == 'Prescription' && $('#firstDoc option:selected').val().trim() == "") {
+                $('#firstDoc').parent().addClass("has-error");
+                $('#firstDoc').focus();
+                alert(1)
                 return false;
             }
         }

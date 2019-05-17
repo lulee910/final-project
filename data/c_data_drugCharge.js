@@ -48,7 +48,7 @@ module.exports = {
     },
 
     async findhjInfo(hjInfoList, page) {
-        let dex = (page - 1) * 30;
+        let dex = (page - 1) * 10;
         let findInfo = {};
         let keys = Object.keys(hjInfoList);
         for (let i = 0; i < keys.length; i++) {
@@ -95,7 +95,7 @@ module.exports = {
         received:{ $sum:"$inFee"},changeFee:{$sum:"$changeFee"}, owemoney:{ $sum:"$owemoney"}}}]).toArray();
         total[0]["received"] = total[0]["received"] - total[0]["changeFee"];
         let dataCount = data.length;
-        data = data.slice(dex,dex+30);
+        data = data.slice(dex,dex+10);
         return {dataList : data, pageSize : dataCount, Total :total};
     },
 

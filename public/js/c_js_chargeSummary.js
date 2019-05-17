@@ -61,7 +61,7 @@ $(function () {
      if($("#pagination")){
         var pagecount = $('#pagecount').html();;
         if(pagecount=="") pagecount =0;
-        var pagesize = 30;
+        var pagesize = 10;
         var currentpage = parseInt($('#pageNo').val());
         var counts,pagehtml="";
         if(pagecount%pagesize==0){
