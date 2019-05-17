@@ -11,12 +11,12 @@
 <body>
     <div id="importBox" class="hidden">
         <form id="importForm" action="/drugInfo/import" method="post" enctype="multipart/form-data"
-            class="form-search import-form">
-            <br /> <input id="uploadFile" name="file" type="file" /><br />
+            class="form-search import-form" onsubmit=" return fileCheck();">
+            <br /> <input id="uploadFile" name="file" type="file"  onchange="changeName(event)" /><br />
             <br />
             <label class="red-color">Import files cannot exceed 5M, only "xls" or "xlsx" format files can be imported!
             </label><br />
-            <input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   Import   "  onsubmit="return btnImportSubmit();"/>
+            <input id="btnImportSubmit" class="btn btn-primary" type="submit" value="   Import   " />
             <a href="/drugInfo/importTemplate">Download Template</a>
         </form>
     </div>

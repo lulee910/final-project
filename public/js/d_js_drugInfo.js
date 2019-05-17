@@ -84,7 +84,6 @@ $(function () {
             }
         });
     });
-
 })
 
 function confirmx(obj, id) {
@@ -107,4 +106,16 @@ function confirmx(obj, id) {
         }
     })
 }
+var fileName = "";
 
+function changeName(e){
+    fileName = e.currentTarget.files[0].name;
+}
+
+function fileCheck(){
+    if(fileName=="" || fileName.indexOf(".xls") < 0){
+        toastr.error("Please select file or file format error");
+        return false;
+    }
+    return true;
+}
