@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const router = express.Router();
 const daily = require("../data/f_data_dailyBusiness");
 
