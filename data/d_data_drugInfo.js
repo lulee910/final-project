@@ -7,7 +7,9 @@ module.exports = {
 
     async add(drugData) {
         const drugInfos = await drugInfo();
-        drugData["serviceId"] = serviceId;
+        if(drugData["serviceId"] == undefined){
+            drugData["serviceId"] = serviceId;
+        }
         drugData["drugPrice"] = parseFloat(drugData["drugPrice"]);
         let in_drugInfos = await drugInfos.insertOne(drugData);
         let drug = await this.findById(in_drugInfos.insertedId);

@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const sysUser = mongoCollections.sysUser;
 const ObjectId = require("mongodb").ObjectID;
 const crypto = require("crypto");
+const userFind = require("./sys_data_userInfo");
 
 module.exports = {
     async login(userName, passWord){
@@ -32,7 +33,8 @@ module.exports = {
         
         const insertInfo = await _conlection.insertOne(userInfo);
         if(insertInfo.insertedCount == 0) throw "User creation failed";
-        return true;
+        let retData = await userFind.findById(insertInfo.insertedId);
+        return retData;
     },
 
     async changePassword(id, passWord){
