@@ -1,8 +1,8 @@
 Management System of Pharmacy Store
 
 First execute "npm install" to download the system dependent package
-Then execute "npm start" to run the system.
-Finally execute "npm seed" to import test data into the system
+Then execute "npm run seed" to import test data into the system
+Finally execute "npm start" to run the system.
 
 Login account: Phil  password: 123456
 
