@@ -58,7 +58,12 @@ module.exports = {
                         firstDoc : "$_id",
                         drugType : {"$cond" : [ { "$eq" : [ "$list._id.drugType" , "1"]} , "Prescription" , "non-Prescription"]},
                         totalIn : "$list.totalIn",
-                        total : "$Tatol"
+                        total : {$divide:[
+                            {$subtract:[
+                                    {$multiply:['$Tatol',100]},
+                                    {$mod:[{$multiply:['$Tatol',100]}, 1]}
+                            ]},
+                            100]}
                     }
                 }
             ]).sort({firstDoc:1}).toArray();

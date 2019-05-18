@@ -94,6 +94,10 @@ module.exports = {
         let total = await con_hjInfo.aggregate([{$match:findInfo},{$group:{_id:null, total:{ $sum:"$numFee"},
         received:{ $sum:"$inFee"},changeFee:{$sum:"$changeFee"}, owemoney:{ $sum:"$owemoney"}}}]).toArray();
         if(total.length > 0){
+            total[0]["total"] = total[0]["total"].toFixed(2);
+            total[0]["received"] = total[0]["received"].toFixed(2);
+            total[0]["changeFee"] = total[0]["changeFee"].toFixed(2);
+            total[0]["owemoney"] = total[0]["owemoney"].toFixed(2);
             total[0]["received"] = total[0]["received"] - total[0]["changeFee"];
         }
         let dataCount = data.length;

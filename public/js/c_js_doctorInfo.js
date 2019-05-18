@@ -14,17 +14,28 @@ $(function(){
     })
     
     $("#tel").keyup(function(e) {
-        this.value = this.value.replace(/[^0-9\s]/g,'');
-        var phoneNum = this.value.trim();
-        if (e.keyCode === 8) {
-            this.value = phoneNum;
-            return;
-        }
-        var len = phoneNum.length;
-        if (len === 3 || len === 7) {
-            phoneNum += ' ';
-            this.value = phoneNum;
-        }
+        var phoneNum = this.value;
+            if (!/^[\d|-]*$/.test(phoneNum) || phoneNum.length > 13) {
+                this.value = phoneNum.substring(0, phoneNum.length - 1);
+            }
+            if (/^[0-1]*$/.test(phoneNum) && phoneNum.length ==1) {
+                this.value = phoneNum.substring(0, phoneNum.length - 1);
+            }
+            var checkPhoneNum = /^[2-9][0-9][0-9]\d+$/;
+            if (checkPhoneNum.test(phoneNum) && phoneNum.length == 4) {
+                this.value = phoneNum.substring(0, 3) + "-" +phoneNum.substring(3, phoneNum.length);
+                return ;
+            }
+            checkPhoneNum = /^[2-9][0-9][0-9]-\d{4}$/;
+            if (checkPhoneNum.test(phoneNum) && phoneNum.length == 8) {
+                this.value = phoneNum.substring(0, 7) + "-" + phoneNum.substring(7, phoneNum.length);
+                return ;
+            }
+            checkPhoneNum = /^[2-9][0-9][0-9]-\d{3}-\d{4}$/;
+            if (checkPhoneNum.test(phoneNum) && phoneNum.length == 14) {
+                this.value = phoneNum.replace(/-/g, '');
+                return ;
+            }
     })
     
 })
