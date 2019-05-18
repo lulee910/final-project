@@ -31,7 +31,7 @@ module.exports = {
 
     async add(userData){
         let userCheck = await this.findUser(userData["userName"]);
-        if(userCheck !=null) throw "This user already exists";
+        if(userCheck.length > 0) throw "This user already exists";
         const con_userInfo = await userInfo();
         let md5 = crypto.createHash("md5");
         let newPas = md5.update(userData["passwd"]).digest("hex");

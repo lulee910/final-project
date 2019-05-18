@@ -28,9 +28,9 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function (err, client) {
                         { drugName: "ddd", barCode: "", drugType: "2", drugSpec: "", drugUnit: "1", drugPrice: "44.44", SCDate: "05/17/2019", remark: "", serviceId: 1 }
                     ]).then(() => {
                         db.collection("doctorInfo").insertMany([
-                            { firstName: "Eric", lastName: "Wang", tel: "111-111-1111", serviceId: 1 },
-                            { firstName: "Steven", lastName: "Liu", tel: "222-222-2222", serviceId: 1 },
-                            { firstName: "Jack", lastName: "Chen", tel: "333-333-3333", serviceId: 1 }
+                            { firstName: "Eric", lastName: "Wang", tel: "111 111 1111", serviceId: 1 },
+                            { firstName: "Steven", lastName: "Liu", tel: "222 222 2222", serviceId: 1 },
+                            { firstName: "Jack", lastName: "Chen", tel: "333 333 3333", serviceId: 1 }
                         ])
                     }).then(() => {
                         console.log("Done seeding database");

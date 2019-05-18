@@ -35,6 +35,20 @@ function submit() {
 
 $(function () {
 
+    $("#tel").keyup(function(e) {
+        this.value = this.value.replace(/[^0-9\s]/g,'');
+        var phoneNum = this.value.trim();
+        if (e.keyCode === 8) {
+            this.value = phoneNum;
+            return;
+        }
+        var len = phoneNum.length;
+        if (len === 3 || len === 7) {
+            phoneNum += ' ';
+            this.value = phoneNum;
+        }
+    })
+
     function addRow(list, idx, tpl, row) {
         var source = $("#hjFeeInfoTpl").html();
         var template = Handlebars.compile(source);
@@ -203,7 +217,25 @@ $(function () {
             }
         }
     }
+
+    
 });
+
+function keyup(obj) {
+    var phoneNum = obj.value.trim();
+    alert(1)
+    if (e.keyCode === 8) {
+        this.value = phoneNum;
+        return;
+    }
+
+    var len = phoneNum.length;
+    if (len === 3 || len === 7) {
+        phoneNum += ' ';
+        alert(phoneNum)
+        obj.value = phoneNum;
+    }
+}
 
 function numFee() {
     var num = document.getElementById("hjFeeInfoList").rows.length;

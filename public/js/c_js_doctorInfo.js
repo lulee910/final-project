@@ -12,6 +12,21 @@ $(function(){
             $('li[name="doctorAdd_tag "]').removeClass('active');
         }
     })
+    
+    $("#tel").keyup(function(e) {
+        this.value = this.value.replace(/[^0-9\s]/g,'');
+        var phoneNum = this.value.trim();
+        if (e.keyCode === 8) {
+            this.value = phoneNum;
+            return;
+        }
+        var len = phoneNum.length;
+        if (len === 3 || len === 7) {
+            phoneNum += ' ';
+            this.value = phoneNum;
+        }
+    })
+    
 })
 
 function confirmx(obj,id){
