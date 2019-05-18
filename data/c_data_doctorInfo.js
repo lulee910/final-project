@@ -24,7 +24,9 @@ module.exports = {
 
     async add(doctorData){
         const con_doctorInfo = await doctorInfo();
-        doctorData["serviceId"] = serviceId;
+        if(doctorData["serviceId"] == undefined){
+            doctorData["serviceId"] = serviceId;
+        }
         let in_doctorInfo = await con_doctorInfo.insertOne(doctorData);
         let ret = await this.findById(in_doctorInfo.insertedId);
         return ret;
