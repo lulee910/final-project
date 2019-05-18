@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const sysUser = require("../data/sys_data_changePasswd");
 const login = require("../data/register");
 const router = express.Router();

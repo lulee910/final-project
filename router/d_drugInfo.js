@@ -31,7 +31,8 @@ router.post("/save", async (req, res) => {
         flag = true;
     } else {
         delete drugInfo._id;
-        if (drug.check(drugInfo.drugName) != null) {
+        let ret = await drug.check(drugInfo.drugName);
+        if (ret != 0) {
             flag = false;
         } else {
             drugs = await drug.add(drugInfo);
@@ -57,6 +58,7 @@ router.post("/getDrugInfo", async (req, res) => {
     let data = await drug.findByName(name);
     res.json(data);
 });
+
 
 router.post("/export", async (req, res) => {
     let drugData = {
@@ -85,90 +87,104 @@ router.post("/export", async (req, res) => {
     writeStream.end();
 });
 router.post("/import", async (req, res) => {
-    let busboy = new Busboy({
-        headers: req.headers,
-        limits: {
-            files: 1,
-            fileSize: 50000000
-        }
-    });
-    req.pipe(busboy);
-    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-        file.on('data', async (data) => {
-            var insertCount = 0;
-            var workbook = XLSX.read(data);
-            var sheetNames = workbook.SheetNames; // return ['sheet1', 'sheet2',……]
-            var worksheet = workbook.Sheets[sheetNames[0]];//Get the first table in excel
-            var ref = worksheet['!ref']; //Get the valid range of excel, such as A1:F20
-            if(typeof ref =="undefined"){
-                res.render("drug/drugInfo", { head_script: "head_script", flag1: true, message:"The imported file is incorrect, please use template file to import" });
-                return;
+    try {
+        let busboy = new Busboy({
+            headers: req.headers,
+            limits: {
+                files: 1,
+                fileSize: 50000000
             }
-            var reg = /[a-zA-Z]/g;
-            ref = ref.replace(reg, "");
-            var line = parseInt(ref.split(':')[1]); // Gets the number of valid rows in excel
-            let head = worksheet['A1'].v;
-            if(head !== "Drug Name"){
-                res.render("drug/drugInfo", { head_script: "head_script", flag1: true, message:"The imported file is incorrect, please use template file to import" });
-                return;
-            }
-            let dataInfo = [];
-            //Read each row in a loop and process it 
-            for (var i = 2; i <= line; i++) {
-                let map = {};
-                var A = worksheet['A' + i].v || '';
-                var B = worksheet['B' + i].v || '';
-                var C = worksheet['C' + i].v || '';
-                var D = worksheet['D' + i].v || '';
-                var E = worksheet['E' + i].v || '';
-                var F = worksheet['F' + i].v || '';
-                var G = worksheet['G' + i].v || '';
-                switch (C) {
-                    case 'Prescription':
-                        C = '1';
-                        break;
-                    case 'non-Prescription':
-                        C = '2';
-                        break;
+        });
+        req.pipe(busboy);
+        busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+            file.on('data', async (data) => {
+                var insertCount = 0;
+                var workbook = XLSX.read(data);
+                var sheetNames = workbook.SheetNames; // return ['sheet1', 'sheet2',……]
+                var worksheet = workbook.Sheets[sheetNames[0]];//Get the first table in excel
+                var ref = worksheet['!ref']; //Get the valid range of excel, such as A1:F20
+                if (typeof ref == "undefined") {
+                    res.render("drug/drugInfo", { head_script: "head_script", flag1: true, message: "The imported file is incorrect, please use template file to import" });
+                    return;
                 }
-                switch (E) {
-                    case 'box':
-                        E = '1';
-                        break;
-                    case 'bag':
-                        E = '2';
-                        break;
-                    default:
-                        E = '3';
+                var reg = /[a-zA-Z]/g;
+                ref = ref.replace(reg, "");
+                var line = parseInt(ref.split(':')[1]); // Gets the number of valid rows in excel
+                let head = worksheet['A1'].v;
+                if (head !== "Drug Name") {
+                    res.render("drug/drugInfo", { head_script: "head_script", flag1: true, message: "The imported file is incorrect, please use template file to import" });
+                    return;
                 }
-                map["drugName"] = A;
-                map["barCode"] = B;
-                map["drugType"] = C;
-                map["drugSpec"] = D;
-                map["drugUnit"] = E;
-                map["drugPrice"] = F;
-                map["SCDate"] = G;
-                dataInfo.push(map);
-            }
-            for (let i = 0; i < dataInfo.length; i++) {
-                if (drug.check(dataInfo[i]["drugName"]) == null) {
-                    let aa = await drug.add(dataInfo[i]);
-                    insertCount++;
+                let dataInfo = [];
+                //Read each row in a loop and process it 
+                for (var i = 2; i <= line; i++) {
+                    let map = {};
+                    var A = worksheet['A' + i].v || '';
+                    var B = "";
+                    if (worksheet['B' + i] != undefined) {
+                        B = worksheet['B' + i].v || '';
+                    }
+                    var C = worksheet['C' + i].v || '';
+                    var D = "";
+                    if (worksheet['D' + i] != undefined) {
+                        D = worksheet['D' + i].v || '';
+                    }
+                    var E = worksheet['E' + i].v || '';
+                    var F = worksheet['F' + i].v || '';
+                    var G = "";
+                    if (worksheet['G' + i] != undefined) {
+                        G = worksheet['G' + i].v || '';
+                    }
+                    switch (C) {
+                        case 'Prescription':
+                            C = '1';
+                            break;
+                        case 'non-Prescription':
+                            C = '2';
+                            break;
+                    }
+                    switch (E) {
+                        case 'box':
+                            E = '1';
+                            break;
+                        case 'bag':
+                            E = '3';
+                            break;
+                        default:
+                            E = '2';
+                    }
+                    map["drugName"] = A;
+                    map["barCode"] = B;
+                    map["drugType"] = C;
+                    map["drugSpec"] = D;
+                    map["drugUnit"] = E;
+                    map["drugPrice"] = F;
+                    map["SCDate"] = G;
+                    dataInfo.push(map);
                 }
-            }
-            let drugData = {
-                drugName: "",
-                drugType: ""
-            }
-            let exist = line - insertCount - 1;
-            let message = "successfully inserted: " + insertCount + " Existing drugs: " + exist;
-            let drugs = await drug.findByNT(drugData);
-            res.render("drug/drugInfo", {
-                head_script: "head_script", drugInfo: drugs, flag1: true, queryList: drugData,
-                message: message
-            });
+                for (let i = 0; i < dataInfo.length; i++) {
+                    let ret = await drug.check(dataInfo[i]["drugName"]);
+                    if (ret == 0) {
+                        let aa = await drug.add(dataInfo[i]);
+                        insertCount++;
+                    }
+                }
+                let drugData = {
+                    drugName: "",
+                    drugType: ""
+                }
+                let exist = line - insertCount - 1;
+                let message = "successfully inserted: " + insertCount + " Existing drugs: " + exist;
+                let drugs = await drug.findByNT(drugData);
+                res.render("drug/drugInfo", {
+                    head_script: "head_script", drugInfo: drugs, flag1: true, queryList: drugData,
+                    message: message
+                });
+            })
         })
-    })
+    } catch (e) {
+        res.render("drug/drugInfo", { head_script: "head_script", flag1: true, message: "Imported Failure" });
+    }
 });
 
 router.get("/importTemplate", async (req, res) => {

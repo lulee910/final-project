@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const register = require("../data/register");
 const router = express.Router();
 

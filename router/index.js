@@ -7,7 +7,6 @@ const dailyBusiness = require("./f_dailyBusiness");
 const performanceSummary = require("./f_performanceSummary");
 const changePasswd = require("./sys_changePasswd");
 const userInfo = require("./sys_userInfo");
-const path = require("path");
 
 
 const constructorMethod = app =>{
