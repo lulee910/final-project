@@ -81,7 +81,7 @@ module.exports = {
     async check(name) {
         const drugInfos = await drugInfo();
         const data = await drugInfos.find({ serviceId: serviceId, drugName: name }).toArray();
-        return data;
+        return data.length;
     },
 
     async findByName(name) {

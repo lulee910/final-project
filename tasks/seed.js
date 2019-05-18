@@ -1,9 +1,7 @@
 const dbConnection = require("../config/mongoConnection");
 const doctors = require("../data/c_data_doctorInfo");
-const charges = require("../data/c_data_drugCharge");
 const drugs = require("../data/d_data_drugInfo");
 const registers = require("../data/register");
-const users = require("../data/sys_data_userInfo");
 
 
 dbConnection().then(
@@ -18,15 +16,15 @@ dbConnection().then(
             })
             .then(db => {
                 return drugs
-                    .add({ drugName: "aaa", drugType: "Prescription", drugPrice: "11.11" })
+                    .add({ drugName: "aaa",barCode:"",drugType: "1", drugSpec:"",  drugUnit:"1", drugPrice: "11.11",SCDate : "05/17/2019", remark : "" })
                     .then(() => {
-                        return drugs.add({ drugName: "bbb", drugType: "Non-Prescription", drugPrice: "22.22" });
+                        return drugs.add({ drugName: "bbb",barCode:"",drugType: "1", drugSpec:"",  drugUnit:"2", drugPrice: "22.22",SCDate : "05/17/2019", remark : "" });
                     })
                     .then(() => {
-                        return drugs.add({ drugName: "ccc", drugType: "Prescription", drugPrice: "33.33" });
+                        return drugs.add({ drugName: "ccc",barCode:"",drugType: "2", drugSpec:"",  drugUnit:"3", drugPrice: "33.33",SCDate : "05/17/2019", remark : "" });
                     })
                     .then(() => {
-                        return drugs.add({ drugName: "ddd", drugType: "Non-Prescription", drugPrice: "44.44" });
+                        return drugs.add({ drugName: "ddd",barCode:"",drugType: "2", drugSpec:"",  drugUnit:"1", drugPrice: "44.44",SCDate : "05/17/2019", remark : "" });
                     });
             })
             .then(db => {

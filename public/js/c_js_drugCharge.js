@@ -120,11 +120,10 @@ $(function () {
     });
 
     $('#drugName').autocomplete("/drugInfo/getDrugInfo", {
-
         width: $("#drugName").width() + 30,
         scrollHeight: 300,
-        matchContains: true,
-        autoFill: false,
+        matchCase: false,
+        matchSubset:false,
         dataType: "json",
         extraParams: {
             drugsName: function () {
@@ -146,57 +145,12 @@ $(function () {
         },
         formatItem: function (item) {
             if (typeof item.drugName != "undefined") {
-                return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
-            }
-        }
-    }).result(function (event, data, formatted) {
-        $("#drugName").val('');
-        var hjFeeInfoRowIdx = 0;
-        data["allNum"] = "1";
-        data["drugsId"] = data["_id"];
-        var num = document.getElementById("hjFeeInfoList").rows.length;
-        var text = '';
-        if (num > 0) {
-            text = document.getElementById("hjFeeInfoList").rows[num - 1].cells[0].innerHTML;
-            hjFeeInfoRowIdx = parseInt(text) + 1;
-        }
-        data["numPrice"] = data["allNum"] * data["drugPrice"];
-        addRow('#hjFeeInfoList', hjFeeInfoRowIdx, hjFeeInfoTpl, data);
-        $('#Flag').val(1);
-        numFee();
-    });
-
-    $('#drugName2').bind("input.autocomplete", function () {
-        $(this).trigger('keydown.autocomplete');
-    });
-
-    $("#drugName2").autocomplete("/drugInfo/getDrugInfo", {
-        width: $("#drugName2").width() + 30,
-        scrollHeight: 300,
-        matchContains: true,
-        autoFill: false,
-        dataType: "json",
-        extraParams: {
-            drugsName: function () {
-                var name = $.trim($("#drugName2").val());
-                return name;
-            }
-        },
-        parse: function (data) {
-            var rows = [];
-            var d = data;
-            for (var i = 0; i < d.length; i++) {
-                rows[rows.length] = {
-                    data: d[i],
-                    value: d[i].bankName,
-                    result: d[i].bankName
-                };
-            }
-            return rows;
-        },
-        formatItem: function (item) {
-            if (typeof item.drugName != "undefined") {
-                return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+                if(item.barCode == ""){
+                    return "<div><p><font>" + '[' + item.drugName + '---' + item.drugType + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+                }else{
+                    return "<div><p><font>" + '[' + item.drugName + '---' + item.barCode + '---' + item.drugType + "</font>---Price：<font color=#CD4F39>" + item.drugPrice + "]</font></p></div>";
+                }
+                
             }
         }
     }).result(function (event, data, formatted) {
