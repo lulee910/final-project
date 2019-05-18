@@ -111,7 +111,6 @@ $(function () {
             if ($("#hjFeeInfoList" + parseInt(text) + "_drugType").html().trim() == 'Prescription' && $('#firstDoc option:selected').val().trim() == "") {
                 $('#firstDoc').parent().addClass("has-error");
                 $('#firstDoc').focus();
-                alert(1)
                 return false;
             }
         }
@@ -232,21 +231,6 @@ $(function () {
     
 });
 
-function keyup(obj) {
-    var phoneNum = obj.value.trim();
-    alert(1)
-    if (e.keyCode === 8) {
-        this.value = phoneNum;
-        return;
-    }
-
-    var len = phoneNum.length;
-    if (len === 3 || len === 7) {
-        phoneNum += ' ';
-        alert(phoneNum)
-        obj.value = phoneNum;
-    }
-}
 
 function numFee() {
     var num = document.getElementById("hjFeeInfoList").rows.length;
