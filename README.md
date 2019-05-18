@@ -30,3 +30,9 @@ The user who registers on the login page is the administrator account. Only the 
 
 Remarks:
 This system is a multi-user system. When registering in the registration page, the system is opened with an independent charging system. Each registered user has its own independent data, and each registered user can only see the data in his own system.
+
+Extra:
+1. divide the drug charge into prescription charge and over the counter charge 
+2. Im plementation of multi user system with data independence so every user can access his or her own charge information
+3. Add drug information by importing excel file and export drug information to excel
+4. Do duplicate charge for the same patient when purchasing same drugs
