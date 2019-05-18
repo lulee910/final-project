@@ -7,7 +7,11 @@ router.get("/", async (req, res) =>{
     if (req.session && req.session.name == 'AuthCookie') {
         res.redirect("/login");
     }else{
-        res.render("sys/main", {flag :true, message : retMessage, head_script:"head_script"});
+        if(retMessage == "error"){
+            res.render("sys/main", {flag :true,  error:true, head_script:"head_script"});
+        }else{
+            res.render("sys/main", {flag :true, message : retMessage, head_script:"head_script"});
+        }
     }
 });
 
@@ -28,7 +32,8 @@ router.get("/login",async (req, res) =>{
         remarks = flag.remarks;
         res.redirect("/charge");
     }else{
-        res.render("sys/main", {flag :true,  error:true, head_script:"head_script"});
+        retMessage = "error";
+        res.redirect("/");
     }
 });
 

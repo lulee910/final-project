@@ -123,9 +123,9 @@
                                     value="{{#drugData}}{{drugSpec}}{{/drugData}}" /></td>
                         </tr>
                         <tr>
-                            <td class="key"><label for="drugUnit">Drug Unit</label></td>
+                            <td class="key"><label for="drugUnit">Drug Unit</label><span class="red-color">*</span></td>
                             <td><label id="lab_drugUnit" class="hidden">{{#drugData}}{{drugUnit}}{{/drugData}}</label>
-                                <select class="form-control" id="drugUnit" name="drugInfo[drugUnit]">
+                                <select class="form-control" id="drugUnit" name="drugInfo[drugUnit]" required>
                                     <option value="" label=" "></option>
                                     <option value="1">box</option>
                                     <option value="2">bottle</option>
@@ -138,11 +138,11 @@
                                     value="{{#drugData}}{{drugPrice}}{{/drugData}}" required /></td>
                         </tr>
                         <tr>
-                            <td class="key"><label for="SCDate">SC Date</label></td>
+                            <td class="key"><label for="SCDate">SC Date</label><span class="red-color">*</span></td>
                             <td>
                                 <div class='input-group date'>
                                     <input type='text' class="form-control" id='SCDate' name="drugInfo[SCDate]"
-                                        value="{{#drugData}}{{SCDate}}{{/drugData}}" />
+                                        value="{{#drugData}}{{SCDate}}{{/drugData}}" required/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>

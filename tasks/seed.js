@@ -15,7 +15,7 @@ MongoClient.connect(url,{ useNewUrlParser: true }, function (err, client) {
     db.dropDatabase()
         .then(() => {
             db.collection("sysUser").insertOne({
-                "username": "Phil",
+                "userName": "Phil",
                 "passWord": newPas,
                 "remarks": "administrator",
                 "serviceId": 1
