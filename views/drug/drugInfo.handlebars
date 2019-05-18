@@ -10,20 +10,6 @@
 
 <body>
     <div id="importBox" class="hidden">
-<<<<<<< HEAD
-		<form id="importForm" action="${ctx}/drugstock/drugsInfo/import" method="post"
-			enctype="multipart/form-data" class="form-search"
-			style="padding-left: 20px; text-align: center;"
-			onsubmit="loading('正在导入，请稍等...');">
-			<br /> <input id="uploadFile" name="file" type="file"
-				style="width: 330px" /><br />
-			<br /> <font style="color: red;">Please make sure the data has been maintained</font><br /> 
-			<input id="btnImportSubmit" class="btn btn-primary"
-				type="submit" value="Import" /> <a
-				href="${ctx}/drugstock/drugsInfo/import/template">Download Template</a>
-		</form>
-	</div>
-=======
         <form id="importForm" action="/drugInfo/import" method="post" enctype="multipart/form-data"
             class="form-search import-form" onsubmit=" return fileCheck();">
             <br /> <input id="uploadFile" name="file" type="file"  onchange="changeName(event)" /><br />
@@ -34,7 +20,6 @@
             <a href="/drugInfo/importTemplate">Download Template</a>
         </form>
     </div>
->>>>>>> 15e66c0ed3e2ed235a56b5ebf88f603a734c0f2c
     <ul id="myTab" class="nav nav-tabs">
         <li {{#if flag1}} class="active" {{/if}}><a href="#drugList" data-toggle="tab">Search Drug</a></li>
         <li {{#if flag2}}class="active" {{/if}}><a href="#drugAdd" data-toggle="tab">Add Drug</a></li>
@@ -42,36 +27,6 @@
 
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade {{#if flag1}}in active{{/if}}" id="drugList">
-<<<<<<< HEAD
-        <div class="panel panel-default ">
-        <div class="panel-heading">
-            <strong><span>Search Information</span></strong>
-        </div>
-        <div class="panel-body">
-            <form id="searchForm"  action="/drugInfo/query" method="get"
-                 class="form-horizontal">
-                <label id="message" class="hidden">{{message}}</label>
-                <table class="table table-bordered table-condensed table-bottom">
-                    <tbody>
-                        <tr>
-                            <td class="key"><label for="drugName">Drug Name</label></td>
-                            <td><input type="text" class="form-control" id="drugName" name="drugInfo[drugName]" value="{{queryList.drugName}}"></td>
-                            <td class="key"><label for="drugType">Drug Type</label></td>
-                            <td><label id="lab_drugType" class="hidden">{{queryList.drugType}}</label>
-                                <select class="form-control" id="drugType" name="drugInfo[drugType]">
-                                <option value="" label=" "></option>
-                                <option value="1">Prescription</option>
-                                <option value="2">Non-Prescription</option>
-                            </select></td>
-                            <td class="btns"><input id="submit" class="btn btn-primary" type="submit"  value="Search" />
-                            <input id="btnExport" class="btn btn-primary" type="button" value="Export" /> 
-                            <input id="btnImport" class="btn btn-primary" type="button" value="Import" /></td>       
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-            </div>
-=======
             <div class="panel panel-default ">
                 <div class="panel-heading">
                     <strong><span>Search Information</span></strong>
@@ -102,7 +57,6 @@
                         </table>
                     </form>
                 </div>
->>>>>>> 15e66c0ed3e2ed235a56b5ebf88f603a734c0f2c
             </div>
             <br>
             <table id="contentTable" class="table table-striped table-bordered table-condensed">
