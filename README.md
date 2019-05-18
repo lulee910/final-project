@@ -4,6 +4,8 @@ First execute "npm install" to download the system dependent package
 Then execute "npm start" to run the system.
 Finally execute "npm seed" to import test data into the system
 
+Login account: Phil  password: 123456
+
 The main functions and operation procedures of the system are as follows:
 1. doctor data maintenance
 After logging in to the system, the first step is to add the doctor information, add the doctor information in [System Settings-->Doctor Info], and the doctor information will be displayed on the charging page after the doctor adds it.
